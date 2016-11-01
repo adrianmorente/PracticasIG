@@ -1,5 +1,4 @@
 Autor: Adrián Morente Gabaldón
-  DNI: 77139229-N
 
 - Instrucciones de compilación:
 
