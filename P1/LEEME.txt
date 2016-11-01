@@ -1,0 +1,22 @@
+Autor: Adrián Morente Gabaldón
+  DNI: 77139229-N
+
+- Instrucciones de compilación:
+
+    · Con ejecutar 'make', basta. Nos ayudamos del archivo Makefile aportado por
+      el profesorado (con pequeñas modificaciones).
+
+- Instrucciones de ejecución: al ejecutar el programa, la imagen mostrada por
+  defecto será el cubo en modo 'alambres'. Se puede cambiar la figura dibujada
+  con las siguientes teclas:
+
+    · A - cubo en modo alambres
+    · S - cubo en modo sólido
+    · D - cubo en modo puntos
+    · F - cubo en modo ajedrez
+    · V - tetraedro en modo alambres
+    · B - tetraedro en modo sólido
+    · N - tetraedro en modo puntos
+    · M - tetraedro en modo ajedrez
+
+    · Q - finalización del programa
