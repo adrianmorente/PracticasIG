@@ -74,7 +74,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       objetoRevolucion1->generarTapaInferior();
       this->figura_dibujada = figura_a_dibujar = 'R';
       break;
-    case '+': //aumentar tamaño objeto Revolucion
+    case '+': //aumentar tamaño objetos Revolucion
       if(figura_dibujada == 'R'){
         objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()+1);
         cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
@@ -88,7 +88,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
       }
       break;
-    case '-': //disminuir tamaño objeto Revolucion
+    case '-': //disminuir tamaño objetos Revolucion
     if(figura_dibujada == 'R'){
       objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()-1);
       cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
