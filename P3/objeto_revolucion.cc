@@ -68,17 +68,27 @@ void ObjetoRevolucion::generarRevolucion(int n_puntos){
 
 void ObjetoRevolucion::generarContorno(){
   int num_puntos = this->perfil.size()/3;   //número de puntos (NO COORDENADAS) del perfil
-
   for(int i = 0; i < this->n_lados; i++){
     int x = (i * num_puntos) + num_puntos-1;
     for(int j = (i*num_puntos); j < x; j++){
-      caras.push_back(j+1);
-      caras.push_back(j+num_puntos);
-      caras.push_back(j);
+      if(perfil[1]>perfil[perfil.size()-2]){
+        caras.push_back(j+1);
+        caras.push_back(j+num_puntos);
+        caras.push_back(j);
 
-      caras.push_back(j+1);
-      caras.push_back(j+num_puntos+1);
-      caras.push_back(j+num_puntos);
+        caras.push_back(j+1);
+        caras.push_back(j+num_puntos+1);
+        caras.push_back(j+num_puntos);
+      }
+      else{
+        caras.push_back(j);
+        caras.push_back(j+num_puntos);
+        caras.push_back(j+1);
+
+        caras.push_back(j+num_puntos);
+        caras.push_back(j+num_puntos+1);
+        caras.push_back(j+1);
+      }
     }
   }
 }

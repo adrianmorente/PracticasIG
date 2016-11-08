@@ -40,10 +40,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
                                     1,0.5,0, 0.5,1,0, 1,2,0, 1.5,3,0,
                                     1.5,4,0, 1.5,5,0, 1.5,6,0, 1.1,6,0,
                                     1.1,5,0, 0.7,4,0, 0,3,0};
-    // vector<float> verticesExamen = {0,3,0, 0.7,4,0, 1.1,5,0, 1.1,6,0,
-    //                                 1.5,6,0, 1.5,5,0, 1.5,4,0, 1.5,3,0,
-    //                                 1,2,0, 0.5,1,0, 1,0.5,0, 1.1,0,0,
-    //                                 1,0,0, 0.7,0.1,0, 0,0.1,0};
     objetoExamen = new ObjetoRevolucion(verticesExamen, 10);
 }
 
@@ -81,11 +77,17 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         figura_a_dibujar = 'R';
         objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
       }
-      else{
+      else if(figura_dibujada == 'M'){
         objetoExamen->redimensionar(objetoExamen->getLados()+1);
         cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
         figura_a_dibujar = 'M';
         objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
+      }
+      else if(figura_dibujada == 'E'){
+        objetoRevolucionPLY->redimensionar(objetoRevolucionPLY->getLados()+1);
+        cout << "· Nº de perfiles: " << objetoRevolucionPLY->getLados() << endl;
+        figura_a_dibujar = 'E';
+        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
       }
       break;
     case '-': //disminuir tamaño objetos Revolucion
@@ -95,11 +97,17 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       figura_a_dibujar = 'R';
       objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
     }
-    else{
+    else if(figura_dibujada == 'M'){
       objetoExamen->redimensionar(objetoExamen->getLados()-1);
       cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
       figura_a_dibujar = 'M';
       objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
+    }
+    else if(figura_dibujada == 'E'){
+      objetoRevolucionPLY->redimensionar(objetoRevolucionPLY->getLados()-1);
+      cout << "· Nº de perfiles: " << objetoRevolucionPLY->getLados() << endl;
+      figura_a_dibujar = 'E';
+      objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
     }
     break;
     case 'R': //objetoRevolucion1
