@@ -36,15 +36,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
     objetoRevolucion1 = new ObjetoRevolucion(vertices, 40);
     char* nombre_fichero = "fichero_vertices.ply";
     objetoRevolucionPLY = new ObjetoRevolucion(nombre_fichero);
-    vector<float> verticesExamen = {0,0.1,0, 0.7,0.1,0, 1,0,0, 1.1,0,0,
-                                    1,0.5,0, 0.5,1,0, 1,2,0, 1.5,3,0,
-                                    1.5,4,0, 1.5,5,0, 1.5,6,0, 1.1,6,0,
-                                    1.1,5,0, 0.7,4,0, 0,3,0};
-    // vector<float> verticesExamen = {0,3,0, 0.7,4,0, 1.1,5,0, 1.1,6,0,
-    //                                 1.5,6,0, 1.5,5,0, 1.5,4,0, 1.5,3,0,
-    //                                 1,2,0, 0.5,1,0, 1,0.5,0, 1.1,0,0,
-    //                                 1,0,0, 0.7,0.1,0, 0,0.1,0};
-    objetoExamen = new ObjetoRevolucion(verticesExamen, 10);
 }
 
 
@@ -75,41 +66,22 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       this->figura_dibujada = figura_a_dibujar = 'R';
       break;
     case '+': //aumentar tamaño objeto Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()+1);
-        cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else{
-        objetoExamen->redimensionar(objetoExamen->getLados()+1);
-        cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
+      objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()+1);
+      cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
+      figura_a_dibujar = 'R';
+      objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
       break;
     case '-': //disminuir tamaño objeto Revolucion
-    if(figura_dibujada == 'R'){
       objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()-1);
       cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
       figura_a_dibujar = 'R';
       objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-    }
-    else{
-      objetoExamen->redimensionar(objetoExamen->getLados()-1);
-      cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
-      figura_a_dibujar = 'M';
-      objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-    }
-    break;
+      break;
     case 'R': //objetoRevolucion1
       objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
       break;
     case 'E': //objetoRevolucionPLY
       objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case 'M': //objetoExamen
-      objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
       break;
   }
   figura_dibujada = figura_a_dibujar;
@@ -135,7 +107,7 @@ int Escena::teclaPulsada(unsigned char Tecla1,int x,int y) {
   }
 
   else if(toupper(Tecla1)=='C' || toupper(Tecla1)=='T' || toupper(Tecla1)=='R' || toupper(Tecla1)=='E' ||
-          toupper(Tecla1)=='0' || toupper(Tecla1)=='1' || toupper(Tecla1)=='2' || toupper(Tecla1)=='M'){
+          toupper(Tecla1)=='0' || toupper(Tecla1)=='1' || toupper(Tecla1)=='2'){
     //con estas teclas cambiamos la figura dibujada: cubo, tetraedro, objetoRevolucion
     figura_dibujada = toupper(Tecla1);
     draw_objects(figura_dibujada);
