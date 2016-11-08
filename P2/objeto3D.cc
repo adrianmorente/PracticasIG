@@ -52,7 +52,8 @@ void Objeto3D::escalar(){
 }
 
 void Objeto3D::trasladar(){
-  glTranslatef(0.0f,0.0f,0.0f);
+  Punto centro = getCentro();
+  glTranslatef(-1*centro.x, -1*centro.y, -1*centro.x);
 }
 
 void Objeto3D::rotar(float grados){
@@ -61,8 +62,8 @@ void Objeto3D::rotar(float grados){
 
 void Objeto3D::dibujar(unsigned char figura, unsigned char modo){
 
-  this->setBoundingBox();
   this->escalar();
+  this->trasladar();
 
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){   //aquí el vector de colores que usaremos.
