@@ -71,6 +71,7 @@ void ObjetoRevolucion::generarContorno(){
   for(int i = 0; i < this->n_lados; i++){
     int x = (i * num_puntos) + num_puntos-1;
     for(int j = (i*num_puntos); j < x; j++){
+      //comprobamos si los puntos entran de arriba a abajo o de abajo a arriba
       if(perfil[1]>perfil[perfil.size()-2]){
         caras.push_back(j+1);
         caras.push_back(j+num_puntos);
