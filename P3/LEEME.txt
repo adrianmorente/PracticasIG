@@ -29,6 +29,8 @@ Autor: Adrián Morente Gabaldón
         -> '-' - disminuir 1 perfil
 
     · 'E' - objeto de revolución a partir de fichero ply
+    
+    · 'M' - objeto de revolución de la prueba, a partir de vector de puntos
 
 - La forma de dibujado se puede cambiar con las siguientes teclas:
 
