@@ -25,22 +25,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	Height=UI_window_height/10;
 	glViewport(0,0,UI_window_width,UI_window_height);
   /* Creación de objetos */
-    cubo = new Cubo;
-    tetraedro = new Tetraedro;
-    char* nombre_ply = "modelos_ply/big_porsche.ply";
-    objetoPLY = new ObjetoPLY(nombre_ply);
-    vector<float> vertices = {5.0,6.0,0.0, 4.5,5.0,0.0, 4.0,4.0,0.0,
-                              3.0,3.0,0.0, 2.0,2.0,0.0, 1.0,1.0,0.0,
-                              1.0,0.0,0.0, 1.0,-1.0,0.0, 1.0,-2.0,0.0,
-                              2.0,-3.0,0.0, 5.0,-4.0,0.0};
-    objetoRevolucion1 = new ObjetoRevolucion(vertices, 40);
-    char* nombre_fichero = "fichero_vertices.ply";
-    objetoRevolucionPLY = new ObjetoRevolucion(nombre_fichero);
-    vector<float> verticesExamen = {0,0.1,0, 0.7,0.1,0, 1,0,0, 1.1,0,0,
-                                    1,0.5,0, 0.5,1,0, 1,2,0, 1.5,3,0,
-                                    1.5,4,0, 1.5,5,0, 1.5,6,0, 1.1,6,0,
-                                    1.1,5,0, 0.7,4,0, 0,3,0};
-    objetoExamen = new ObjetoRevolucion(verticesExamen, 10);
 }
 
 
@@ -49,124 +33,7 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
   switch(figura_a_dibujar){
-    case 'C': //cubo
-      cubo->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case 'T': //tetraedro
-      tetraedro->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case 'P': //objetoPLY
-      objetoPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case '0': //objetos Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->borrarTapas();
-        cout << "· Tapas borradas." << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'M'){
-        objetoExamen->borrarTapas();
-        cout << "· Tapas borradas." << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'E'){
-        objetoRevolucionPLY->borrarTapas();
-        cout << "· Tapas borradas." << endl;
-        figura_a_dibujar = 'E';
-        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      break;
-    case '1': //objetos Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->generarTapaSuperior();
-        cout << "· Tapa superior generada" << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'M'){
-        objetoExamen->generarTapaSuperior();
-        cout << "· Tapa superior generada" << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'E'){
-        objetoRevolucionPLY->generarTapaSuperior();
-        cout << "· Tapa superior generada" << endl;
-        figura_a_dibujar = 'E';
-        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      break;
-    case '2': //objetos Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->generarTapaInferior();
-        cout << "· Tapa inferior generada" << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'M'){
-        objetoExamen->generarTapaInferior();
-        cout << "· Tapa inferior generada" << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'E'){
-        objetoRevolucionPLY->generarTapaInferior();
-        cout << "· Tapa inferior generada" << endl;
-        figura_a_dibujar = 'E';
-        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      break;
-    case '+': //aumentar tamaño objetos Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()+1);
-        cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'M'){
-        objetoExamen->redimensionar(objetoExamen->getLados()+1);
-        cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'E'){
-        objetoRevolucionPLY->redimensionar(objetoRevolucionPLY->getLados()+1);
-        cout << "· Nº de perfiles: " << objetoRevolucionPLY->getLados() << endl;
-        figura_a_dibujar = 'E';
-        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      break;
-    case '-': //disminuir tamaño objetos Revolucion
-      if(figura_dibujada == 'R'){
-        objetoRevolucion1->redimensionar(objetoRevolucion1->getLados()-1);
-        cout << "· Nº de perfiles: " << objetoRevolucion1->getLados() << endl;
-        figura_a_dibujar = 'R';
-        objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'M'){
-        objetoExamen->redimensionar(objetoExamen->getLados()-1);
-        cout << "· Nº de perfiles: " << objetoExamen->getLados() << endl;
-        figura_a_dibujar = 'M';
-        objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      else if(figura_dibujada == 'E'){
-        objetoRevolucionPLY->redimensionar(objetoRevolucionPLY->getLados()-1);
-        cout << "· Nº de perfiles: " << objetoRevolucionPLY->getLados() << endl;
-        figura_a_dibujar = 'E';
-        objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      }
-      break;
-    case 'R': //objetoRevolucion1
-      objetoRevolucion1->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case 'E': //objetoRevolucionPLY
-      objetoRevolucionPLY->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
-    case 'M': //objetoExamen
-      objetoExamen->dibujar(figura_a_dibujar, forma_dibujado);
-      break;
+
   }
   figura_dibujada = figura_a_dibujar;
 }
@@ -183,38 +50,6 @@ int Escena::teclaPulsada(unsigned char Tecla1,int x,int y) {
 
   std::cout << "Tecla " << Tecla1 << std::endl;
 	if (toupper(Tecla1)=='Q') return 1;
-
-  else if(toupper(Tecla1)=='A' || toupper(Tecla1)=='S' || toupper(Tecla1)=='D' || toupper(Tecla1)=='F'){
-    //con estas 4 teclas cambiamos la forma de dibujado: alambres, sólido, puntos y ajedrez
-    forma_dibujado = toupper(Tecla1);
-    return 0;
-  }
-
-  else if(toupper(Tecla1)=='C' || toupper(Tecla1)=='T' || toupper(Tecla1)=='R' || toupper(Tecla1)=='E' || toupper(Tecla1)=='M'){
-    //con estas teclas cambiamos la figura dibujada: cubo, tetraedro, objetosRevolucion
-    figura_dibujada = toupper(Tecla1);
-    draw_objects(figura_dibujada);
-    return 0;
-  }
-
-  else if(toupper(Tecla1)=='P'){
-    //con esta tecla dibujamos un objeto PLY cuyo nombre es leído desde teclado
-    string nombre;
-    cout << "¿Qué objeto PLY quieres que pinte?: ";
-    cin >> nombre;
-    char* nombre_archivo = new char[nombre.length()+1];
-    strcpy(nombre_archivo, nombre.c_str());
-    objetoPLY = new ObjetoPLY(nombre_archivo);
-    figura_dibujada = 'P';
-    draw_objects(figura_dibujada);
-    return 0;
-  }
-
-  else if(Tecla1=='+' || Tecla1=='-' || Tecla1=='0' || Tecla1=='1' || Tecla1=='2'){
-    //mandamos a dibujar la modificación deseada sin cambiar la figura dibujada
-    draw_objects(Tecla1);
-    return 0;
-  }
 
   //si pulsamos cualquier otra, no cambia nada
   else return 0;

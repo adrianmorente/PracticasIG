@@ -20,10 +20,6 @@ private:
 // tamaño de los ejes
 #define AXIS_SIZE 5000
 Ejes ejes;
-Cubo *cubo;
-Tetraedro *tetraedro;
-ObjetoPLY *objetoPLY;
-ObjetoRevolucion *objetoRevolucion1, *objetoRevolucionPLY, *objetoExamen;
 
 unsigned char forma_dibujado = 'A';		//por defecto, dibujamos el cubo en modo alambres
 unsigned char figura_dibujada = 'C';
