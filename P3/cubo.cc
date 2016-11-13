@@ -1,4 +1,4 @@
-#include "cub0.0.h"
+#include "cubo.h"
 
 Cubo::Cubo(){
   //Ayudand0.0me de un dibuj0.0 hech0.0 a man0.0, intr0.0duzc0.0 l0.0s vertices y las caras
