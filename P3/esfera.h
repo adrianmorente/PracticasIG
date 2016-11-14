@@ -1,10 +1,10 @@
 #ifndef _ESFERA_H
 #define _ESFERA_H
 
-#include "objeto3D.h"
+#include "objeto_revolucion.h"
 using namespace std;
 
-class Esfera : public Objeto3D {
+class Esfera : public ObjetoRevolucion {
 
   public:
     Esfera();

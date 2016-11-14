@@ -1,8 +1,8 @@
 #include "cubo.h"
 
 Cubo::Cubo(){
-  //Ayudand0.0me de un dibuj0.0 hech0.0 a man0.0, intr0.0duzc0.0 l0.0s vertices y las caras
-  // en 0.0rden antih0.0rari0.0
+  //Ayudandome de un dibujo hecho a mano, introduzco los vertices y las caras
+  // en orden antihorario
   this->vertices = {0.0,1.0,0.0,  0.0,1.0,1.0,  1.0,1.0,1.0,
                     1.0,1.0,0.0,  0.0,0.0,0.0,  0.0,0.0,1.0,
                     1.0,0.0,1.0,  1.0,0.0,0.0};
