@@ -25,6 +25,7 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	Height=UI_window_height/10;
 	glViewport(0,0,UI_window_width,UI_window_height);
   /* Creación de objetos */
+  robot = new Robot;
 }
 
 
@@ -33,7 +34,9 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
   switch(figura_a_dibujar){
-
+    case 'R':
+      robot->dibujar();
+      break;
   }
   figura_dibujada = figura_a_dibujar;
 }
@@ -50,6 +53,18 @@ int Escena::teclaPulsada(unsigned char Tecla1,int x,int y) {
 
   std::cout << "Tecla " << Tecla1 << std::endl;
 	if (toupper(Tecla1)=='Q') return 1;
+
+  else if(toupper(Tecla1)=='A' || toupper(Tecla1)=='S' || toupper(Tecla1)=='D' || toupper(Tecla1)=='F'){
+    //con estas 4 teclas cambiamos la forma de dibujado: alambres, sólido, puntos y ajedrez
+    forma_dibujado = toupper(Tecla1);
+    return 0;
+  }
+
+  else if(toupper(Tecla1)=='R'){
+    figura_dibujada = 'R';
+    draw_objects(figura_dibujada);
+    return 0;
+  }
 
   //si pulsamos cualquier otra, no cambia nada
   else return 0;

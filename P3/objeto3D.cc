@@ -41,6 +41,19 @@ float Objeto3D::getSizeBoundingBox(){
   return modulo(p);
 }
 
+float Objeto3D::getMaxX(){
+  return maximo.x;
+}
+
+float Objeto3D::getMaxY(){
+  return maximo.y;
+}
+
+float Objeto3D::getMaxZ(){
+  return maximo.z;
+}
+
+
 float Objeto3D::modulo(Punto p){
   return sqrt( pow(p.x,2) + pow(p.y,2) + pow(p.z,2) );
 }
@@ -60,10 +73,9 @@ void Objeto3D::rotar(float grados){
   glRotatef(grados,0.0f,0.0f,0.0f);
 }
 
-void Objeto3D::dibujar(unsigned char figura, unsigned char modo){
+void Objeto3D::dibujar(unsigned char modo){
 
   this->escalar();
-  this->trasladar();
 
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){   //aquí el vector de colores que usaremos.
@@ -74,7 +86,7 @@ void Objeto3D::dibujar(unsigned char figura, unsigned char modo){
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_CULL_FACE);
   glLineWidth(1.5);
   glPointSize(5.0);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);

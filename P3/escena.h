@@ -14,12 +14,14 @@
 #include "tetraedro.h"
 #include "objetoPLY.h"
 #include "objeto_revolucion.h"
+#include "robot.h"
 
 class Escena {
 private:
 // tamaño de los ejes
 #define AXIS_SIZE 5000
 Ejes ejes;
+Robot *robot; //<- mi modelo jerárquico
 
 unsigned char forma_dibujado = 'A';		//por defecto, dibujamos el cubo en modo alambres
 unsigned char figura_dibujada = 'C';

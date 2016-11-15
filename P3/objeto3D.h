@@ -31,12 +31,15 @@ class Objeto3D{
     void setBoundingBox();
     Punto getCentro();
     float getSizeBoundingBox();
+    float getMaxX();
+    float getMaxY();
+    float getMaxZ();
     float modulo(Punto p);
     void escalar();
     void trasladar();
     void rotar(float grados);
 
-    void dibujar(unsigned char figura, unsigned char modo);
+    void dibujar(unsigned char modo);
     void dibujarAjedrez();
 };
 
