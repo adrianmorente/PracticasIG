@@ -13,7 +13,7 @@ class Robot{
     //vector con los vértices para generar mis figuras por revolución
     vector<float> perfil_cilindro = {0.0,-1.0,0.0, 1.0,-1.0,0.0,
                                       1.0,1.0,0.0, 0.0,1.0,0.0};
-    vector<float> perfil_esfera = {0.0,0.0,0.0};
+    vector<float> perfil_esfera;
     Cubo *cubo;
     ObjetoRevolucion *hexagono;
     ObjetoRevolucion *cilindro;
@@ -27,6 +27,12 @@ class Robot{
     void dibujarTronco();
     void dibujarBrazos();
     void dibujarCabeza();
+    void generarEsfera();
+    /*
+    void rotarPiernas();
+    void rotarBrazos();
+    void rotarCabeza();
+    */
 };
 
 #endif

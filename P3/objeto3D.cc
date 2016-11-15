@@ -75,8 +75,6 @@ void Objeto3D::rotar(float grados){
 
 void Objeto3D::dibujar(unsigned char modo){
 
-  this->escalar();
-
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){   //aquí el vector de colores que usaremos.
     colores.push_back(0.58);                //  tenemos que añadir los tres valores RGB tantas veces como
