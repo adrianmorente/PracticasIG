@@ -35,7 +35,7 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
   switch(figura_a_dibujar){
     case 'R':
-      robot->dibujar();
+      robot->dibujar(forma_dibujado);
       break;
   }
   figura_dibujada = figura_a_dibujar;
