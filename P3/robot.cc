@@ -157,17 +157,17 @@ void Robot::dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojo
       cubo->dibujar(modo);
     glPopMatrix();
     glPushMatrix();//ojo izdo
-      glTranslatef(-15,10,37.5+mov_ojos);
+      glTranslatef(-15,10,40.5+mov_ojos);
       glRotatef(90,1,0,0);
       glRotatef(30,0,1,0);
-      glScalef(18,1,18);
+      glScalef(18,5,18);
       prisma_tri->dibujar('s');
     glPopMatrix();
     glPushMatrix();//ojo dcho
-      glTranslatef(15,10,37.5+mov_ojos);
+      glTranslatef(15,10,40.5+mov_ojos);
       glRotatef(90,1,0,0);
       glRotatef(30,0,1,0);
-      glScalef(18,1,18);
+      glScalef(18,5,18);
       prisma_tri->dibujar('s');
     glPopMatrix();
 

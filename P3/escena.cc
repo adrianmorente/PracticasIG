@@ -67,12 +67,12 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         grados_cabeza -= 2;
       break;
     case 'C':
-      if(mov_ojos < 5)
-        mov_ojos += 0.5;
+      if(mov_ojos > 0.1)
+        mov_ojos -= 1;
       break;
     case 'c':
-      if(mov_ojos > 0)
-        mov_ojos -= 0.5;
+      if(mov_ojos < 30)
+        mov_ojos += 1;
       break;
     case 'V':
       if(grados_pierna < 60)

@@ -41,6 +41,7 @@ class Objeto3D{
 
     void dibujar(unsigned char modo);
     void dibujarAjedrez();
+    void dibujarConLineas();
 };
 
 #endif
