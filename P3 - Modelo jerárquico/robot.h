@@ -23,11 +23,11 @@ class Robot : public Objeto3D{
 
   public:
     Robot();
-    void dibujar(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna);
-    void dibujarCuerpo(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna);
+    void dibujar(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna, float mov_aureola);
+    void dibujarCuerpo(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna, float mov_aureola);
     void dibujarPiernas(unsigned char modo, float grados_pierna);
     void dibujarBrazos(unsigned char modo, float grados);
-    void dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojos);
+    void dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojos, float mov_aureola);
     void generarPerfilEsfera();
     void generarPerfilToroide();
 };

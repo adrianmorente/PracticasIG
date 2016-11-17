@@ -29,6 +29,7 @@ float grados_hombro = 0;
 float grados_cabeza = 0;
 float mov_ojos = 0;
 float grados_pierna = 0;
+float mov_aureola = 0;
 
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '3';

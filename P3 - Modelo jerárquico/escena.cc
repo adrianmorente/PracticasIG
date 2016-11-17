@@ -50,7 +50,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       revolucion->dibujar(forma_dibujado);
       break;
     case '3':
-      robot->dibujar(forma_dibujado, grados_hombro, grados_cabeza, mov_ojos, grados_pierna);
+      robot->dibujar(forma_dibujado, grados_hombro, grados_cabeza, mov_ojos, grados_pierna, mov_aureola);
       break;
     case 'Z':
       grados_hombro += 2;
@@ -82,6 +82,14 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       if(grados_pierna > -60)
         grados_pierna -= 5;
       break;
+    case 'B':
+      if(mov_aureola < 20)
+        mov_aureola += 2;
+      break;
+    case 'b':
+      if(mov_aureola > 0)
+        mov_aureola -= 2;
+      break;
   }
 }
 
@@ -105,7 +113,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
   }
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
-          || tecla=='v' || tecla=='V'){
+          || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
