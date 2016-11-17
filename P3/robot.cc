@@ -146,10 +146,8 @@ void Robot::dibujarBrazos(unsigned char modo, float grados){
 }
 
 void Robot::dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojos){
-  //la cabeza será un simple cubo, con un toroide encima algo separado a modo de
-  // aureola
   glPushMatrix();
-    glTranslatef(0,95,0);
+    glTranslatef(0,95,0);//cabeza
     glRotatef(grados_cuello,0,1,0);
     glPushMatrix();
       glScalef(75,60,75);
@@ -177,11 +175,7 @@ void Robot::dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojo
       toroide->borrarTapas();
       toroide->dibujar(modo);
     glPopMatrix();
-
   glPopMatrix();
-}
-void Robot::dibujarAureola(unsigned char modo){
-
 }
 
 void Robot::generarPerfilEsfera(){

@@ -28,7 +28,6 @@ class Robot : public Objeto3D{
     void dibujarPiernas(unsigned char modo, float grados_pierna);
     void dibujarBrazos(unsigned char modo, float grados);
     void dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojos);
-    void dibujarAureola(unsigned char modo);
     void generarPerfilEsfera();
     void generarPerfilToroide();
 };
