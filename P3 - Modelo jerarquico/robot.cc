@@ -13,11 +13,11 @@ Robot::Robot(){
 }
 
 //este método controla el color con el que dibujamos cada parte del robot
-void Robot::dibujar(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna, float mov_aureola){
-  dibujarCuerpo(modo, grados_hombro, grados_cabeza, mov_ojos, grados_pierna, mov_aureola);
+void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_hombro_d, float grados_cabeza, float mov_ojos, float grados_pierna_i, float grados_pierna_d, float mov_aureola){
+  dibujarCuerpo(modo, grados_hombro_i, grados_hombro_d, grados_cabeza, mov_ojos, grados_pierna_i, grados_pierna_d, mov_aureola);
 }
 
-void Robot::dibujarCuerpo(unsigned char modo, float grados_hombro, float grados_cabeza, float mov_ojos, float grados_pierna, float mov_aureola){
+void Robot::dibujarCuerpo(unsigned char modo, float grados_hombro_i, float grados_hombro_d, float grados_cabeza, float mov_ojos, float grados_pierna_i, float grados_pierna_d, float mov_aureola){
   //el tronco constará de un hexágono del que sale un pequeño cilindro a modo de
   // cuello
   glPushMatrix();
@@ -30,16 +30,16 @@ void Robot::dibujarCuerpo(unsigned char modo, float grados_hombro, float grados_
     cilindro->dibujar(modo);
   glPopMatrix();
   dibujarCabeza(modo, grados_cabeza, mov_ojos, mov_aureola);
-  dibujarBrazos(modo, grados_hombro);
-  dibujarPiernas(modo, grados_pierna);
+  dibujarBrazos(modo, grados_hombro_i, grados_hombro_d);
+  dibujarPiernas(modo, grados_pierna_i, grados_pierna_d);
 }
 
-void Robot::dibujarPiernas(unsigned char modo, float grados_pierna){
+void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grados_pierna_d){
   //cada pierna es un cilindro con una esfera al principio y un prisma triangular
   // "tumbado" al final
   glPushMatrix();//pierna izda
     glTranslatef(-20,-50,0);
-    glRotatef(grados_pierna,1,0,0);
+    glRotatef(grados_pierna_i,1,0,0);
     glPushMatrix();
       glScalef(12,12,12);
       esfera->dibujar(modo);
@@ -59,9 +59,9 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna){
     glPopMatrix();
   glPopMatrix();
 
-  glPushMatrix();//pierna izda
+  glPushMatrix();//pierna dcha
     glTranslatef(20,-50,0);
-    glRotatef(grados_pierna,1,0,0);
+    glRotatef(grados_pierna_d,1,0,0);
     glPushMatrix();
       glScalef(12,12,12);
       esfera->dibujar(modo);
@@ -82,7 +82,7 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna){
   glPopMatrix();
 }
 
-void Robot::dibujarBrazos(unsigned char modo, float grados){
+void Robot::dibujarBrazos(unsigned char modo, float grados_i, float grados_d){
 
   glPushMatrix();//cilindro del hombro izquierdo (fijo)
     glTranslatef(-56,38,0);
@@ -94,13 +94,13 @@ void Robot::dibujarBrazos(unsigned char modo, float grados){
   glPushMatrix();//esfera del hombro (rota con el brazo)
     glPushMatrix();
       glTranslatef(-65,38,0);
-      glRotatef(grados,1,0,0);
+      glRotatef(grados_i,1,0,0);
       glScalef(12,12,12);
       esfera->dibujar(modo);
     glPopMatrix();
     glPushMatrix();//brazo
       glTranslatef(-65,38,0);
-      glRotatef(grados,1,0,0);
+      glRotatef(grados_i,1,0,0);
       glTranslatef(0,-38.5,0);
       glPushMatrix();
         glScalef(12,76,12);
@@ -124,13 +124,13 @@ void Robot::dibujarBrazos(unsigned char modo, float grados){
   glPushMatrix();//esfera del hombro (rota con el brazo)
     glPushMatrix();
       glTranslatef(65,38,0);
-      glRotatef(grados,1,0,0);
+      glRotatef(grados_d,1,0,0);
       glScalef(12,12,12);
       esfera->dibujar(modo);
     glPopMatrix();
     glPushMatrix();//brazo
       glTranslatef(65,38,0);
-      glRotatef(grados,1,0,0);
+      glRotatef(grados_d,1,0,0);
       glTranslatef(0,-38.5,0);
       glPushMatrix();
         glScalef(12,76,12);
