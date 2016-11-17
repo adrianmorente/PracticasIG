@@ -161,23 +161,24 @@ void Robot::dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojo
       glRotatef(90,1,0,0);
       glRotatef(30,0,1,0);
       glScalef(18,5,18);
-      prisma_tri->dibujar('s');
+      prisma_tri->dibujar(modo);
     glPopMatrix();
     glPushMatrix();//ojo dcho
       glTranslatef(15,10,40.5+mov_ojos);
       glRotatef(90,1,0,0);
       glRotatef(30,0,1,0);
       glScalef(18,5,18);
-      prisma_tri->dibujar('s');
+      prisma_tri->dibujar(modo);
+    glPopMatrix();
+    glPushMatrix();//aureola
+      glTranslatef(0,50,-15);
+      glRotatef(-15,1,0,0);
+      glScalef(8,6,8);
+      toroide->borrarTapas();
+      toroide->dibujar(modo);
     glPopMatrix();
 
   glPopMatrix();
-
-    // glPushMatrix();
-    //   glScalef(40,40,40);
-    //   toroide->dibujar(modo);
-    // glPopMatrix();
-
 }
 void Robot::dibujarAureola(unsigned char modo){
 
@@ -198,7 +199,7 @@ void Robot::generarPerfilToroide(){
   int n = 60;
   float alpha = M_PI/2, suma = 2*M_PI/n, radio = 1.0;
   for(int i=0; i<=n; i++){
-    perfil_toroide.push_back(-radio*cos(alpha)+2.5);
+    perfil_toroide.push_back(-radio*cos(alpha)+4);
     perfil_toroide.push_back(-radio*sin(alpha));
     perfil_toroide.push_back(0.0);
     alpha += suma;
