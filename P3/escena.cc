@@ -25,6 +25,13 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	Height=UI_window_height/10;
 	glViewport(0,0,UI_window_width,UI_window_height);
   /* Creación de objetos */
+  char* nombre_ply = "modelos_ply/big_porsche.ply";
+  vector<float> vertices = {5.0,6.0,0.0, 4.5,5.0,0.0, 4.0,4.0,0.0,
+                            3.0,3.0,0.0, 2.0,2.0,0.0, 1.0,1.0,0.0,
+                            1.0,0.0,0.0, 1.0,-1.0,0.0, 1.0,-2.0,0.0,
+                            2.0,-3.0,0.0, 5.0,-4.0,0.0};
+  revolucion = new ObjetoRevolucion(vertices, 40);
+  ply = new ObjetoPLY(nombre_ply);
   robot = new Robot;
 }
 
@@ -34,11 +41,48 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
   switch(figura_a_dibujar){
-    case 'R':
-      robot->dibujar(forma_dibujado);
+    case '1':
+      ply->escalar(); //para visualizarlo a una escala razonable
+      ply->dibujar(forma_dibujado);
+      break;
+    case '2':
+      revolucion->escalar();
+      revolucion->dibujar(forma_dibujado);
+      break;
+    case '3':
+      robot->dibujar(forma_dibujado, grados_hombro, grados_cabeza, mov_ojos, grados_pierna);
+      break;
+    case 'Z':
+      grados_hombro += 2;
+      break;
+    case 'z':
+      grados_hombro -= 2;
+      break;
+    case 'X':
+      if(grados_cabeza < 90)
+        grados_cabeza += 2;
+      break;
+    case 'x':
+      if(grados_cabeza > -90)
+        grados_cabeza -= 2;
+      break;
+    case 'C':
+      if(mov_ojos < 5)
+        mov_ojos += 0.5;
+      break;
+    case 'c':
+      if(mov_ojos > 0)
+        mov_ojos -= 0.5;
+      break;
+    case 'V':
+      if(grados_pierna < 60)
+        grados_pierna += 5;
+      break;
+    case 'v':
+      if(grados_pierna > -60)
+        grados_pierna -= 5;
       break;
   }
-  figura_dibujada = figura_a_dibujar;
 }
 
 
@@ -49,19 +93,29 @@ void Escena::dibujar(){
 	draw_objects(figura_dibujada);
 }
 
-int Escena::teclaPulsada(unsigned char Tecla1,int x,int y) {
+int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
-  std::cout << "Tecla " << Tecla1 << std::endl;
-	if (toupper(Tecla1)=='Q') return 1;
+  std::cout << "Tecla " << tecla << std::endl;
+	if (toupper(tecla)=='Q') return 1;
 
-  else if(toupper(Tecla1)=='A' || toupper(Tecla1)=='S' || toupper(Tecla1)=='D' || toupper(Tecla1)=='F'){
+  else if(tolower(tecla)=='p' || tolower(tecla)=='l' || tolower(tecla)=='s' || tolower(tecla)=='a'){
     //con estas 4 teclas cambiamos la forma de dibujado: alambres, sólido, puntos y ajedrez
-    forma_dibujado = toupper(Tecla1);
+    forma_dibujado = tolower(tecla);
     return 0;
   }
 
-  else if(toupper(Tecla1)=='R'){
-    figura_dibujada = 'R';
+  else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
+          || tecla=='v' || tecla=='V'){
+    // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
+    // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
+    // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
+    // v/V -> modificar grado de libertad: rotación de las piernas sobre la ingle (eje X)
+    draw_objects(tecla);
+    return 0;
+  }
+
+  else if(tecla=='1' || tecla=='2' || tecla=='3'){
+    figura_dibujada = tecla;
     draw_objects(figura_dibujada);
     return 0;
   }

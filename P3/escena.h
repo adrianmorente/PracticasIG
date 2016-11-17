@@ -21,10 +21,17 @@ private:
 // tamaño de los ejes
 #define AXIS_SIZE 5000
 Ejes ejes;
+ObjetoPLY *ply;
+ObjetoRevolucion *revolucion;
 Robot *robot; //<- mi modelo jerárquico
 
-unsigned char forma_dibujado = 'A';		//por defecto, dibujamos el cubo en modo alambres
-unsigned char figura_dibujada = 'C';
+float grados_hombro = 0;
+float grados_cabeza = 0;
+float mov_ojos = 0;
+float grados_pierna = 0;
+
+unsigned char forma_dibujado = 's';
+unsigned char figura_dibujada = '3';
 
 // variables que definen la posicion de la camara en coordenadas polares
 GLfloat Observer_distance;
@@ -52,7 +59,7 @@ public:
 	void dibujar() ;
 
 	// Interacci�n con la escena
-	int teclaPulsada(unsigned char Tecla1,int x,int y) ;
+	int teclaPulsada(unsigned char tecla,int x,int y) ;
 	void teclaEspecial(int Tecla1,int x,int y);
 };
 #endif

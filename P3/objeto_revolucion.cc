@@ -10,6 +10,8 @@ ObjetoRevolucion::ObjetoRevolucion(vector<float> v_perfil, int n_puntos){
   generarContorno();
   generarRevolucion(n_puntos);
   setBoundingBox();
+  generarTapaSuperior();
+  generarTapaInferior();
 }
 
 

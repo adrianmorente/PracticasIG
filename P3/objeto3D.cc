@@ -84,26 +84,26 @@ void Objeto3D::dibujar(unsigned char modo){
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
-  //glEnable(GL_CULL_FACE);
+  glEnable(GL_CULL_FACE);
   glLineWidth(1.5);
   glPointSize(5.0);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 
   switch(modo){
-    case 'A':
+    case 'l':
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
       glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
       break;
-    case 'S':
+    case 's':
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-      glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
+      dibujarConLineas();
       break;
-    case 'D':
+    case 'p':
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
       glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
       break;
-    case 'F':
+    case 'a':
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       dibujarAjedrez();
       break;
@@ -126,14 +126,14 @@ void Objeto3D::dibujarAjedrez(){
   //almacenaremos los valores RGB en dos arrays, tantas veces como vértices tengamos
   vector<float> color1, color2;
   for(int i=0; i<caras.size(); i++){
-    //1º Amarillo
-    color1.push_back(1.0);
-    color1.push_back(1.0);
+    //1º
     color1.push_back(0.0);
-    //2º Lila
-    color2.push_back(0.58);
-    color2.push_back(0.0);
-    color2.push_back(0.827);
+    color1.push_back(0.0);
+    color1.push_back(0.1);
+    //2º
+    color2.push_back(0.392);
+    color2.push_back(0.584);
+    color2.push_back(0.929);
   }
 
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -149,4 +149,42 @@ void Objeto3D::dibujarAjedrez(){
   glColorPointer(3, GL_FLOAT, 0, &color2[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glDrawElements(GL_TRIANGLES, vert2.size(), GL_UNSIGNED_INT, &vert2[0]);
+}
+
+void Objeto3D::dibujarConLineas(){
+
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+
+  vector<float> colores;
+  for(int i=0; i<vertices.size()/3; i++){
+    colores.push_back(0.392);
+    colores.push_back(0.584);
+    colores.push_back(0.929);
+  }
+
+
+  glEnable(GL_CULL_FACE);
+  glLineWidth(1.0);
+  glPointSize(5.0);
+  glColorPointer(3, GL_FLOAT, 0, &colores[0]);
+  glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
+  glPolygonOffset(-1,-1);
+
+  glEnable(GL_POLYGON_OFFSET_LINE);
+  colores.clear();
+
+  setBoundingBox();
+  for(int i=0; i<vertices.size()/3; i++){
+    colores.push_back(0.0);
+    colores.push_back(0.0);
+    colores.push_back(0.1);
+  }
+  glColorPointer(3, GL_FLOAT, 0, &colores[0]);
+  glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
+  glDisable(GL_POLYGON_OFFSET_LINE);
 }
