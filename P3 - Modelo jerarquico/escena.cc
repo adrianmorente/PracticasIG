@@ -88,32 +88,32 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         grados_pierna_i += 5;
       }
       break;
-    case 'B':
+    case 'b':
       if(mov_aureola < 20)
         mov_aureola += 2;
       break;
-    case 'b':
+    case 'B':
       if(mov_aureola > 0)
         mov_aureola -= 2;
       break;
     case 'N':
       if(grados_pierna_d > -60){
-        grados_pierna_d -= 5;
-        grados_pierna_i += 5;
+        grados_pierna_d -= 15;
+        grados_pierna_i += 15;
       }
       if(grados_hombro_i > -60){
-        grados_hombro_i -= 5;
-        grados_hombro_d += 5;
+        grados_hombro_i -= 15;
+        grados_hombro_d += 15;
       }
       break;
     case 'n':
       if(grados_pierna_d < 60){
-        grados_pierna_d += 5;
-        grados_pierna_i -= 5;
+        grados_pierna_d += 15;
+        grados_pierna_i -= 15;
       }
       if(grados_hombro_i < 60){
-        grados_hombro_i += 5;
-        grados_hombro_d -= 5;
+        grados_hombro_i += 15;
+        grados_hombro_d -= 15;
       }
       break;
   }
