@@ -12,12 +12,7 @@ Robot::Robot(){
   prisma_tri = new ObjetoRevolucion(perfil_cilindro, 3);
 }
 
-//este método controla el color con el que dibujamos cada parte del robot
 void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_hombro_d, float grados_cabeza, float mov_ojos, float grados_pierna_i, float grados_pierna_d, float mov_aureola){
-  dibujarCuerpo(modo, grados_hombro_i, grados_hombro_d, grados_cabeza, mov_ojos, grados_pierna_i, grados_pierna_d, mov_aureola);
-}
-
-void Robot::dibujarCuerpo(unsigned char modo, float grados_hombro_i, float grados_hombro_d, float grados_cabeza, float mov_ojos, float grados_pierna_i, float grados_pierna_d, float mov_aureola){
   //el tronco constará de un hexágono del que sale un pequeño cilindro a modo de
   // cuello
   glPushMatrix();
