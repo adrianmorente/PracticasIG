@@ -16,17 +16,19 @@ void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_homb
   //el tronco constará de un hexágono del que sale un pequeño cilindro a modo de
   // cuello
   glPushMatrix();
-    glScalef(100.0,100.0,50.0);
-    prisma_hex->dibujar(modo);
+    glPushMatrix();
+      glScalef(100.0,100.0,50.0);
+      prisma_hex->dibujar(modo);
+    glPopMatrix();
+    glPushMatrix();
+      glScalef(15.0,15.0,15.0);
+      glTranslatef(0.0,3.80,0.0);
+      cilindro->dibujar(modo);
+    glPopMatrix();
+    dibujarCabeza(modo, grados_cabeza, mov_ojos, mov_aureola);
+    dibujarBrazos(modo, grados_hombro_i, grados_hombro_d);
+    dibujarPiernas(modo, grados_pierna_i, grados_pierna_d);
   glPopMatrix();
-  glPushMatrix();
-    glScalef(15.0,15.0,15.0);
-    glTranslatef(0.0,3.80,0.0);
-    cilindro->dibujar(modo);
-  glPopMatrix();
-  dibujarCabeza(modo, grados_cabeza, mov_ojos, mov_aureola);
-  dibujarBrazos(modo, grados_hombro_i, grados_hombro_d);
-  dibujarPiernas(modo, grados_pierna_i, grados_pierna_d);
 }
 
 void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grados_pierna_d){
