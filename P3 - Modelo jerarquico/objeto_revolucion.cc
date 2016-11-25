@@ -44,6 +44,8 @@ void ObjetoRevolucion::redimensionar(int n){
   this->caras.clear();
   generarContorno();
   generarRevolucion(n_lados);
+  generarTapaSuperior();
+  generarTapaInferior();
 }
 
 

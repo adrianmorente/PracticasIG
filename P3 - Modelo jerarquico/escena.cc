@@ -52,6 +52,16 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
     case '3':
       robot->dibujar(forma_dibujado, grados_hombro_i, grados_hombro_d, grados_cabeza, mov_ojos, grados_pierna_i, grados_pierna_d, mov_aureola);
       break;
+    case '+':
+      revolucion->redimensionar(revolucion->getLados()+1);
+      figura_a_dibujar = '2';
+      break;
+    case '-':
+      if(revolucion->getLados() > 3){
+        revolucion->redimensionar(revolucion->getLados()-1);
+        figura_a_dibujar = '2';
+      }
+      break;
     case 'Z':
       grados_hombro_i += 4;
       grados_hombro_d += 4;
@@ -128,20 +138,21 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
   std::cout << "Tecla " << tecla << std::endl;
 	if (toupper(tecla)=='Q') return 1;
 
+  //con estas teclas cambiamos la forma de dibujar las figuras
   else if(tolower(tecla)=='p' || tolower(tecla)=='l' || tolower(tecla)=='s' || tolower(tecla)=='a'){
-    //con estas 4 teclas cambiamos la forma de dibujado: alambres, sólido, puntos y ajedrez
     forma_dibujado = tolower(tecla);
     return 0;
   }
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
-          || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'){
+        || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
+        || tecla=='+' || tecla=='-'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
     // v/V -> modificar grado de libertad: rotación de las piernas sobre la ingle (eje X)
     // b/B -> modificar grado de libertad: traslación de la aureola (eje Z)
-    // n -> animación automática: efecto de caminar
+    // n/N -> animación: efecto de caminar (mezcla de z/Z y v/V)
     draw_objects(tecla);
     return 0;
   }
