@@ -62,6 +62,15 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         figura_a_dibujar = '2';
       }
       break;
+    case '7':
+      revolucion->borrarTapas();
+      break;
+    case '8':
+      revolucion->generarTapaSuperior();
+      break;
+    case '9':
+      revolucion->generarTapaInferior();
+      break;
     case 'Z':
       grados_hombro_i += 4;
       grados_hombro_d += 4;
