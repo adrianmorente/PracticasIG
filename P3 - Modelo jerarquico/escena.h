@@ -62,5 +62,7 @@ public:
 	// Interacci�n con la escena
 	int teclaPulsada(unsigned char tecla,int x,int y) ;
 	void teclaEspecial(int Tecla1,int x,int y);
+
+	void animarRobot();
 };
 #endif

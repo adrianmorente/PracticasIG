@@ -42,7 +42,7 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
       esfera->dibujar(modo);
     glPopMatrix();
     glPushMatrix();
-      glTranslatef(0,-12,0);
+      glTranslatef(0,-22,0);
       glPushMatrix();
         glScalef(12,60,12);
         cilindro->dibujar(modo);
@@ -64,7 +64,7 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
       esfera->dibujar(modo);
     glPopMatrix();
     glPushMatrix();
-      glTranslatef(0,-12,0);
+      glTranslatef(0,-22,0);
       glPushMatrix();
         glScalef(12,60,12);
         cilindro->dibujar(modo);

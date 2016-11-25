@@ -54,11 +54,11 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       break;
     case 'Z':
       grados_hombro_i += 4;
-      grados_hombro_d -= 4;
+      grados_hombro_d += 4;
       break;
     case 'z':
       grados_hombro_i -= 4;
-      grados_hombro_d += 4;
+      grados_hombro_d -= 4;
       break;
     case 'X':
       if(grados_cabeza < 90)
@@ -77,16 +77,12 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         mov_ojos += 1;
       break;
     case 'V':
-      if(grados_pierna_d < 60){
-        grados_pierna_d += 5;
-        grados_pierna_i -= 5;
-      }
+      grados_pierna_d += 5;
+      grados_pierna_i += 5;
       break;
     case 'v':
-      if(grados_pierna_d > -60){
-        grados_pierna_d -= 5;
-        grados_pierna_i += 5;
-      }
+      grados_pierna_d -= 5;
+      grados_pierna_i -= 5;
       break;
     case 'b':
       if(mov_aureola < 20)
@@ -144,6 +140,8 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
     // v/V -> modificar grado de libertad: rotación de las piernas sobre la ingle (eje X)
+    // b/B -> modificar grado de libertad: traslación de la aureola (eje Z)
+    // n -> animación automática: efecto de caminar
     draw_objects(tecla);
     return 0;
   }
@@ -215,4 +213,27 @@ glRotatef(Observer_angle_y,0,1,0);
 void Escena::draw_axis()
 {
 ejes.draw();
+}
+
+
+//**************************************************************************
+// Funcion que anima al robot de forma automática
+//***************************************************************************
+void Escena::animarRobot(){
+
+  if(grados_pierna_d > -60){
+    grados_pierna_d -= 15;
+    grados_pierna_i += 15;
+  }else{
+    grados_hombro_i -= 15;
+    grados_hombro_d += 15;
+  }
+
+  if(grados_pierna_d < 60){
+    grados_pierna_d += 15;
+    grados_pierna_i -= 15;
+  }else{
+    grados_hombro_i += 15;
+    grados_hombro_d -= 15;
+  }
 }
