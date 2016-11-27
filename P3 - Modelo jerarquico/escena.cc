@@ -115,10 +115,12 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       if(grados_pierna_d > -60){
         grados_pierna_d -= 15;
         grados_pierna_i += 15;
+        grados_cuerpo += 1.5;
       }
       if(grados_hombro_i > -60){
         grados_hombro_i -= 15;
         grados_hombro_d += 15;
+        grados_cuerpo -= 1.5;
       }
       break;
     case 'n':

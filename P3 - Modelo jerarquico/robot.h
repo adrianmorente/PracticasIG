@@ -1,13 +1,12 @@
 #ifndef _ROBOT_H
 #define _ROBOT_H
 
-#include "objeto3D.h"
 #include "objeto_revolucion.h"
 #include "cubo.h"
 #include "objetoPLY.h"
 using namespace std;
 
-class Robot : public Objeto3D{
+class Robot{
 
   private:
     //vector con los vértices para generar mis figuras por revolución
