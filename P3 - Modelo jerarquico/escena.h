@@ -35,6 +35,10 @@ float mov_aureola = 0;
 bool cabeza_izquierda = true, cabeza_derecha = false;
 bool ojos_fuera = true, ojos_dentro = false;
 bool aureola_arriba = true, aureola_abajo = false;
+bool p_izda_delante = true, p_izda_atras = false;
+bool p_dcha_delante = false, p_dcha_atras = true;
+bool b_izdo_delante = true, b_izdo_atras = false;
+bool b_dcho_delante = true, b_dcho_atras = false;
 
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '3';
