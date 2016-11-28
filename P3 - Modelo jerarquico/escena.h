@@ -32,6 +32,10 @@ float grados_pierna_i = 0, grados_pierna_d = 0;
 float grados_cuerpo = 0;
 float mov_aureola = 0;
 
+bool cabeza_izquierda = true, cabeza_derecha = false;
+bool ojos_fuera = true, ojos_dentro = false;
+bool aureola_arriba = true, aureola_abajo = false;
+
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '3';
 

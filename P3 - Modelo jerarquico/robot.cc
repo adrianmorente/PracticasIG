@@ -16,6 +16,7 @@ void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_homb
   //el tronco constará de un hexágono del que sale un pequeño cilindro a modo de
   // cuello
   glPushMatrix();
+    glTranslatef(0,-30,0);
     glPushMatrix();
       glScalef(100.0,100.0,50.0);
       prisma_hex->dibujar(modo);

@@ -115,12 +115,10 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       if(grados_pierna_d > -60){
         grados_pierna_d -= 15;
         grados_pierna_i += 15;
-        grados_cuerpo += 1.5;
       }
       if(grados_hombro_i > -60){
         grados_hombro_i -= 15;
         grados_hombro_d += 15;
-        grados_cuerpo -= 1.5;
       }
       break;
     case 'n':
@@ -133,6 +131,50 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         grados_hombro_d -= 15;
       }
       break;
+  }
+}
+
+//**************************************************************************
+// Funcion que anima al robot de forma automática
+//***************************************************************************
+void Escena::animarRobot(){
+  if(cabeza_izquierda && grados_cabeza < 90)
+    grados_cabeza += 2;
+  else{
+    cabeza_derecha = true;
+    cabeza_izquierda = false;
+  }
+  if(cabeza_derecha && grados_cabeza > -90)
+    grados_cabeza -= 2;
+  else{
+    cabeza_izquierda = true;
+    cabeza_derecha = false;
+  }
+
+  if(ojos_fuera && mov_ojos < 30)
+    mov_ojos += 1;
+  else{
+    ojos_dentro = true;
+    ojos_fuera = false;
+  }
+  if(ojos_dentro && mov_ojos > 0.1)
+    mov_ojos -= 1;
+  else{
+    ojos_fuera = true;
+    ojos_dentro = false;
+  }
+
+  if(aureola_arriba && mov_aureola < 20)
+    mov_aureola += 2;
+  else{
+    aureola_abajo = true;
+    aureola_arriba = false;
+  }
+  if(aureola_abajo && mov_aureola > 0)
+    mov_aureola -= 2;
+  else{
+    aureola_arriba = true;
+    aureola_abajo = false;
   }
 }
 
@@ -235,27 +277,4 @@ glRotatef(Observer_angle_y,0,1,0);
 void Escena::draw_axis()
 {
 ejes.draw();
-}
-
-
-//**************************************************************************
-// Funcion que anima al robot de forma automática
-//***************************************************************************
-void Escena::animarRobot(){
-
-  if(grados_pierna_d > -60){
-    grados_pierna_d -= 15;
-    grados_pierna_i += 15;
-  }else{
-    grados_hombro_i -= 15;
-    grados_hombro_d += 15;
-  }
-
-  if(grados_pierna_d < 60){
-    grados_pierna_d += 15;
-    grados_pierna_i -= 15;
-  }else{
-    grados_hombro_i += 15;
-    grados_hombro_d -= 15;
-  }
 }

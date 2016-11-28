@@ -29,6 +29,7 @@ class Robot{
     void dibujarCabeza(unsigned char modo, float grados_cuello, float mov_ojos, float mov_aureola);
     void generarPerfilEsfera();
     void generarPerfilToroide();
+    void animarRobot();
 };
 
 #endif

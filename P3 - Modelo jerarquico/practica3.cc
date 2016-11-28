@@ -75,6 +75,12 @@ void special_keys(int Tecla1,int x,int y) {
 }
 
 
+void idle(){
+	escena->animarRobot();
+	glutPostRedisplay();
+}
+
+
 
 //***************************************************************************
 // Programa principal
@@ -116,6 +122,7 @@ glutSpecialFunc(special_keys);
 // funcion de inicialización
 escena->inicializar(UI_window_width,UI_window_height);
 // inicio del bucle de eventos
+glutIdleFunc( idle );
 glutMainLoop();
 return 0;
 }
