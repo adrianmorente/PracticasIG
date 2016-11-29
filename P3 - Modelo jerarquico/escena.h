@@ -40,6 +40,10 @@ bool p_dcha_delante = false, p_dcha_atras = true;
 bool b_izdo_delante = true, b_izdo_atras = false;
 bool b_dcho_delante = true, b_dcho_atras = false;
 
+bool hacer_animacion = true;
+
+float velocidad_animacion = 2;
+
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '3';
 

@@ -55,21 +55,26 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
     case '+':
       revolucion->redimensionar(revolucion->getLados()+1);
       figura_a_dibujar = '2';
+      cout << "Nº perfiles: " << revolucion->getLados() << endl;
       break;
     case '-':
       if(revolucion->getLados() > 3){
         revolucion->redimensionar(revolucion->getLados()-1);
         figura_a_dibujar = '2';
       }
+      cout << "Nº perfiles: " << revolucion->getLados() << endl;
       break;
     case '7':
       revolucion->borrarTapas();
+      revolucion->dibujar(forma_dibujado);
       break;
     case '8':
       revolucion->generarTapaSuperior();
+      revolucion->dibujar(forma_dibujado);
       break;
     case '9':
       revolucion->generarTapaInferior();
+      revolucion->dibujar(forma_dibujado);
       break;
     case 'Z':
       grados_hombro_i += 4;
@@ -131,6 +136,11 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         grados_hombro_d -= 10;
       }
       break;
+    case '.':
+      if(hacer_animacion)
+        hacer_animacion = false;
+      else
+        hacer_animacion = true;
   }
 }
 
@@ -155,7 +165,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
         || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
-        || tecla=='+' || tecla=='-'){
+        || tecla=='+' || tecla=='-' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
@@ -239,95 +249,96 @@ ejes.draw();
 // Funcion que anima al robot de forma automática
 //***************************************************************************
 void Escena::animarRobot(){
-  if(cabeza_izquierda && grados_cabeza < 90)
-    grados_cabeza += 2;
-  else{
-    cabeza_derecha = true;
-    cabeza_izquierda = false;
-  }
-  if(cabeza_derecha && grados_cabeza > -90)
-    grados_cabeza -= 2;
-  else{
-    cabeza_izquierda = true;
-    cabeza_derecha = false;
-  }
+  if(hacer_animacion){
+    if(cabeza_izquierda && grados_cabeza < 90)
+      grados_cabeza += (2+velocidad_animacion);
+    else{
+      cabeza_derecha = true;
+      cabeza_izquierda = false;
+    }
+    if(cabeza_derecha && grados_cabeza > -90)
+      grados_cabeza -= (2+velocidad_animacion);
+    else{
+      cabeza_izquierda = true;
+      cabeza_derecha = false;
+    }
 
-  if(ojos_fuera && mov_ojos < 30)
-    mov_ojos += 1;
-  else{
-    ojos_dentro = true;
-    ojos_fuera = false;
-  }
-  if(ojos_dentro && mov_ojos > 0.1)
-    mov_ojos -= 1;
-  else{
-    ojos_fuera = true;
-    ojos_dentro = false;
-  }
+    if(ojos_fuera && mov_ojos < 30)
+      mov_ojos += (1+velocidad_animacion/3);
+    else{
+      ojos_dentro = true;
+      ojos_fuera = false;
+    }
+    if(ojos_dentro && mov_ojos > 0.1)
+      mov_ojos -= (1+velocidad_animacion/3);
+    else{
+      ojos_fuera = true;
+      ojos_dentro = false;
+    }
 
-  if(aureola_arriba && mov_aureola < 20)
-    mov_aureola += 2;
-  else{
-    aureola_abajo = true;
-    aureola_arriba = false;
-  }
-  if(aureola_abajo && mov_aureola > 0)
-    mov_aureola -= 2;
-  else{
-    aureola_arriba = true;
-    aureola_abajo = false;
-  }
+    if(aureola_arriba && mov_aureola < 20)
+      mov_aureola += (2+velocidad_animacion);
+    else{
+      aureola_abajo = true;
+      aureola_arriba = false;
+    }
+    if(aureola_abajo && mov_aureola > 0)
+      mov_aureola -= (2+velocidad_animacion);
+    else{
+      aureola_arriba = true;
+      aureola_abajo = false;
+    }
 
-  if(p_izda_delante && grados_pierna_d > -60)
-    grados_pierna_d -= 5;
-  else{
-    p_izda_atras = true;
-    p_izda_delante = false;
-  }
-  if(p_izda_atras && grados_pierna_d < 60)
-    grados_pierna_d += 5;
-  else{
-    p_izda_delante = true;
-    p_izda_atras = false;
-  }
+    if(p_izda_delante && grados_pierna_d > -60)
+      grados_pierna_d -= (5+velocidad_animacion);
+    else{
+      p_izda_atras = true;
+      p_izda_delante = false;
+    }
+    if(p_izda_atras && grados_pierna_d < 60)
+      grados_pierna_d += (5+velocidad_animacion);
+    else{
+      p_izda_delante = true;
+      p_izda_atras = false;
+    }
 
-  if(p_izda_delante && grados_pierna_i < 60)
-    grados_pierna_i += 5;
-  else{
-    p_izda_atras = true;
-    p_izda_delante = false;
-  }
-  if(p_izda_atras && grados_pierna_i > -60)
-    grados_pierna_i -= 5;
-  else{
-    p_izda_delante = true;
-    p_izda_atras = false;
-  }
+    if(p_izda_delante && grados_pierna_i < 60)
+      grados_pierna_i += (5+velocidad_animacion);
+    else{
+      p_izda_atras = true;
+      p_izda_delante = false;
+    }
+    if(p_izda_atras && grados_pierna_i > -60)
+      grados_pierna_i -= (5+velocidad_animacion);
+    else{
+      p_izda_delante = true;
+      p_izda_atras = false;
+    }
 
-  if(p_izda_delante && grados_hombro_d > -60)
-    grados_hombro_d -= 5;
-  else{
-    p_izda_atras = true;
-    p_izda_delante = false;
-  }
-  if(p_izda_atras && grados_hombro_d < 60)
-    grados_hombro_d += 5;
-  else{
-    p_izda_delante = true;
-    p_izda_atras = false;
-  }
+    if(p_izda_delante && grados_hombro_d > -60)
+      grados_hombro_d -= (5+velocidad_animacion);
+    else{
+      p_izda_atras = true;
+      p_izda_delante = false;
+    }
+    if(p_izda_atras && grados_hombro_d < 60)
+      grados_hombro_d += (5+velocidad_animacion);
+    else{
+      p_izda_delante = true;
+      p_izda_atras = false;
+    }
 
-  if(p_izda_delante && grados_hombro_i < 60)
-    grados_hombro_i += 5;
-  else{
-    p_izda_atras = true;
-    p_izda_delante = false;
+    if(p_izda_delante && grados_hombro_i < 60)
+      grados_hombro_i += (5+velocidad_animacion);
+    else{
+      p_izda_atras = true;
+      p_izda_delante = false;
+    }
+    if(p_izda_atras && grados_hombro_i > -60)
+      grados_hombro_i -= (5+velocidad_animacion);
+    else{
+      p_izda_delante = true;
+      p_izda_atras = false;
+    }
   }
-  if(p_izda_atras && grados_hombro_i > -60)
-    grados_hombro_i -= 5;
-  else{
-    p_izda_delante = true;
-    p_izda_atras = false;
-  }
-
 }
