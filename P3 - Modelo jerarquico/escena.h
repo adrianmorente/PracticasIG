@@ -42,7 +42,7 @@ bool b_dcho_delante = true, b_dcho_atras = false;
 
 bool hacer_animacion = true;
 
-float velocidad_animacion = 2;
+float velocidad_animacion = 0.1;
 
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '3';

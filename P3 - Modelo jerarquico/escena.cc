@@ -64,6 +64,13 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       }
       cout << "Nº perfiles: " << revolucion->getLados() << endl;
       break;
+    case '5':
+      if(velocidad_animacion > 2)
+      velocidad_animacion -= 0.1;
+      break;
+    case '6':
+      velocidad_animacion += 0.1;
+      break;
     case '7':
       revolucion->borrarTapas();
       revolucion->dibujar(forma_dibujado);
@@ -165,7 +172,8 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
         || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
-        || tecla=='+' || tecla=='-' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.'){
+        || tecla=='+' || tecla=='-' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.'
+        || tecla=='5' || tecla=='6'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
