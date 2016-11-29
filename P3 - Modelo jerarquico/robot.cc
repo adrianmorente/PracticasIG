@@ -35,6 +35,17 @@ void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_homb
 void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grados_pierna_d){
   //cada pierna es un cilindro con una esfera al principio y un prisma triangular
   // "tumbado" al final
+  int grados_rodilla_i=0, grados_rodilla_d=0;
+  if(grados_pierna_i > 0)
+    grados_rodilla_i=0;
+  else
+    grados_rodilla_i = -grados_pierna_i;
+
+  if(grados_pierna_d > 0)
+    grados_rodilla_d=0;
+  else
+    grados_rodilla_d = -grados_pierna_d;
+
   glPushMatrix();//pierna izda
     glTranslatef(-20,-50,0);
     glRotatef(grados_pierna_i,1,0,0);
@@ -45,14 +56,27 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
     glPushMatrix();//pierna izda
       glTranslatef(0,-22,0);
       glPushMatrix();
-        glScalef(12,60,12);
+        glScalef(12,30,12);
         cilindro->dibujar(modo);
       glPopMatrix();
-      glPushMatrix();//pie izdo
-        glTranslatef(0,-32,0);
-        glRotatef(90,0,0,1);
-        glScalef(15,28,24);
-        prisma_tri->dibujar(modo);
+      glPushMatrix();
+        glTranslatef(0,-15,0);
+        glRotatef(grados_rodilla_i,1,0,0);
+        glPushMatrix();
+          glScalef(10,10,10);
+          esfera->dibujar(modo);
+        glPopMatrix();
+        glTranslatef(0,-15,0);
+        glPushMatrix();
+          glScalef(12,30,12);
+          cilindro->dibujar(modo);
+        glPopMatrix();
+        glPushMatrix();//pie izdo
+          glTranslatef(0,-16,0);
+          glRotatef(90,0,0,1);
+          glScalef(15,28,24);
+          prisma_tri->dibujar(modo);
+        glPopMatrix();
       glPopMatrix();
     glPopMatrix();
   glPopMatrix();
@@ -67,14 +91,27 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
     glPushMatrix();//pierna dcha
       glTranslatef(0,-22,0);
       glPushMatrix();
-        glScalef(12,60,12);
+        glScalef(12,30,12);
         cilindro->dibujar(modo);
       glPopMatrix();
-      glPushMatrix();//pie dcho
-        glTranslatef(0,-32,0);
-        glRotatef(90,0,0,1);
-        glScalef(15,28,24);
-        prisma_tri->dibujar(modo);
+      glPushMatrix();
+        glTranslatef(0,-15,0);
+        glRotatef(grados_rodilla_d,1,0,0);
+        glPushMatrix();
+          glScalef(10,10,10);
+          esfera->dibujar(modo);
+        glPopMatrix();
+        glTranslatef(0,-15,0);
+        glPushMatrix();
+          glScalef(12,30,12);
+          cilindro->dibujar(modo);
+        glPopMatrix();
+        glPushMatrix();//pie dcho
+          glTranslatef(0,-16,0);
+          glRotatef(90,0,0,1);
+          glScalef(15,28,24);
+          prisma_tri->dibujar(modo);
+        glPopMatrix();
       glPopMatrix();
     glPopMatrix();
   glPopMatrix();
