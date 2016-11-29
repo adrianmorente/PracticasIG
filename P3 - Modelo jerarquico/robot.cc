@@ -22,8 +22,8 @@ void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_homb
       prisma_hex->dibujar(modo);
     glPopMatrix();
     glPushMatrix();
+      glTranslatef(0.0,57.5,0.0);
       glScalef(15.0,15.0,15.0);
-      glTranslatef(0.0,3.80,0.0);
       cilindro->dibujar(modo);
     glPopMatrix();
     dibujarCabeza(modo, grados_cabeza, mov_ojos, mov_aureola);
