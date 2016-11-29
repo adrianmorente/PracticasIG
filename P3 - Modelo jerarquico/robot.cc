@@ -38,17 +38,17 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
   glPushMatrix();//pierna izda
     glTranslatef(-20,-50,0);
     glRotatef(grados_pierna_i,1,0,0);
-    glPushMatrix();
+    glPushMatrix();//ingle izda
       glScalef(12,12,12);
       esfera->dibujar(modo);
     glPopMatrix();
-    glPushMatrix();
+    glPushMatrix();//pierna izda
       glTranslatef(0,-22,0);
       glPushMatrix();
         glScalef(12,60,12);
         cilindro->dibujar(modo);
       glPopMatrix();
-      glPushMatrix();
+      glPushMatrix();//pie izdo
         glTranslatef(0,-32,0);
         glRotatef(90,0,0,1);
         glScalef(15,28,24);
@@ -60,17 +60,17 @@ void Robot::dibujarPiernas(unsigned char modo, float grados_pierna_i, float grad
   glPushMatrix();//pierna dcha
     glTranslatef(20,-50,0);
     glRotatef(grados_pierna_d,1,0,0);
-    glPushMatrix();
+    glPushMatrix();//ingle dcha
       glScalef(12,12,12);
       esfera->dibujar(modo);
     glPopMatrix();
-    glPushMatrix();
+    glPushMatrix();//pierna dcha
       glTranslatef(0,-22,0);
       glPushMatrix();
         glScalef(12,60,12);
         cilindro->dibujar(modo);
       glPopMatrix();
-      glPushMatrix();
+      glPushMatrix();//pie dcho
         glTranslatef(0,-32,0);
         glRotatef(90,0,0,1);
         glScalef(15,28,24);
