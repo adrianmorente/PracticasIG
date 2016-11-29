@@ -31,3 +31,4 @@ Autor: Adrián Morente Gabaldón
     · 'c/C' - modificar traslación de los ojos (adelante/atrás)
     · 'v/V' - modificar rotación de las dos piernas a la vez (adelante/atrás)
     · 'b/B' - modificar traslación de la aureola (arriba/abajo)
+    · '.' - activar/desactivar animación automática
