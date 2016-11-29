@@ -5,6 +5,7 @@
 Objeto3D::Objeto3D(){
   this->vertices.clear();
   this->caras.clear();
+  this->normales.clear();
 }
 
 void Objeto3D::setBoundingBox(){
