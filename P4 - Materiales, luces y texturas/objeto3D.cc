@@ -5,7 +5,49 @@
 Objeto3D::Objeto3D(){
   this->vertices.clear();
   this->caras.clear();
-  this->normales.clear();
+}
+
+void Objeto3D::calcularNormalCara(vector<int> & cara){
+  Punto normal; //realmente es un vector 3D, pero lo llamaremos Punto igual que nuestro struct
+  normal.x = 0;
+  normal.y = 0;
+  normal.z = 0;
+
+  Punto actual, siguiente;
+  for(int i=0; i<cara.size(); i++){
+    actual.x = cara[i];
+    actual.y = cara[i+1];
+    actual.z = cara[i+2];
+    siguiente.x = cara[(i+3) %cara.size()];
+    siguiente.y = cara[(i+4) %cara.size()];
+    siguiente.z = cara[(i+5) %cara.size()];
+
+    normal.x += ((actual.y - siguiente.y)*(actual.z - siguiente.z));
+    normal.y += ((actual.z - siguiente.z)*(actual.x - siguiente.x));
+    normal.z += ((actual.x - siguiente.x)*(actual.y - siguiente.y));
+  }
+
+  float modulo = sqrt( normal.x*normal.x + normal.y*normal.y + normal.z+normal.z );
+  normal.x = normal.x/modulo;
+  normal.y = normal.y/modulo;
+  normal.z = normal.z/modulo;
+}
+
+void Objeto3D::calcularNormalesCaras(){
+  vector<int> aux = {0,0,0};
+  for(int i=0; i<caras.size(); i+=3){
+    aux[0] = caras[i];
+    aux[1] = caras[i+1];
+    aux[2] = caras[i+2];
+    calcularNormalCara(aux);
+    this->normales_caras.push_back(aux[0]);
+    this->normales_caras.push_back(aux[1]);
+    this->normales_caras.push_back(aux[2]);
+  }
+}
+
+void Objeto3D::calcularNormalesVertices(){
+
 }
 
 void Objeto3D::setBoundingBox(){
@@ -83,11 +125,13 @@ void Objeto3D::dibujar(unsigned char modo){
     colores.push_back(0.827);
   }
 
+  glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
   glEnable(GL_CULL_FACE);
   glLineWidth(1.5);
   glPointSize(5.0);
+  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 
@@ -137,11 +181,12 @@ void Objeto3D::dibujarAjedrez(){
     color2.push_back(0.929);
   }
 
+  glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
   glLineWidth(3.0);
   glPointSize(5.0);
-
+  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
   glColorPointer(3, GL_FLOAT, 0, &color1[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glDrawElements(GL_TRIANGLES, vert1.size(), GL_UNSIGNED_INT, &vert1[0]);
@@ -154,6 +199,7 @@ void Objeto3D::dibujarAjedrez(){
 
 void Objeto3D::dibujarConLineas(){
 
+  glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
 
@@ -168,6 +214,7 @@ void Objeto3D::dibujarConLineas(){
   glEnable(GL_CULL_FACE);
   glLineWidth(1.0);
   glPointSize(5.0);
+  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
