@@ -30,7 +30,6 @@ class Objeto3D{
 
   public:
     Objeto3D();
-    void calcularNormalCara(vector<int> & cara);
     void calcularNormalesCaras();
     void calcularNormalesVertices();
     void setBoundingBox();

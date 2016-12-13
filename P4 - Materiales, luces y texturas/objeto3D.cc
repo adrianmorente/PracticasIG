@@ -5,49 +5,68 @@
 Objeto3D::Objeto3D(){
   this->vertices.clear();
   this->caras.clear();
-}
-
-void Objeto3D::calcularNormalCara(vector<int> & cara){
-  Punto normal; //realmente es un vector 3D, pero lo llamaremos Punto igual que nuestro struct
-  normal.x = 0;
-  normal.y = 0;
-  normal.z = 0;
-
-  Punto actual, siguiente;
-  for(int i=0; i<cara.size(); i++){
-    actual.x = cara[i];
-    actual.y = cara[i+1];
-    actual.z = cara[i+2];
-    siguiente.x = cara[(i+3) %cara.size()];
-    siguiente.y = cara[(i+4) %cara.size()];
-    siguiente.z = cara[(i+5) %cara.size()];
-
-    normal.x += ((actual.y - siguiente.y)*(actual.z - siguiente.z));
-    normal.y += ((actual.z - siguiente.z)*(actual.x - siguiente.x));
-    normal.z += ((actual.x - siguiente.x)*(actual.y - siguiente.y));
-  }
-
-  float modulo = sqrt( normal.x*normal.x + normal.y*normal.y + normal.z+normal.z );
-  normal.x = normal.x/modulo;
-  normal.y = normal.y/modulo;
-  normal.z = normal.z/modulo;
+  this->normales_caras.clear();
+  this->normales_vertices.clear();
 }
 
 void Objeto3D::calcularNormalesCaras(){
-  vector<int> aux = {0,0,0};
-  for(int i=0; i<caras.size(); i+=3){
-    aux[0] = caras[i];
-    aux[1] = caras[i+1];
-    aux[2] = caras[i+2];
-    calcularNormalCara(aux);
-    this->normales_caras.push_back(aux[0]);
-    this->normales_caras.push_back(aux[1]);
-    this->normales_caras.push_back(aux[2]);
+  Punto a, b; //realmente son los vectores del triangulo
+  Punto normal;
+  normal.x = normal.y = normal.z = 0;
+  normales_caras.assign(caras.size(), 0);
+
+  for(int i=0; i<caras.size()/3; i++){
+    int vx, vy, vz;
+    //obtenemos los vertices del triangulo
+    vx = caras[i*3];
+    vy = caras[i*3+1];
+    vz = caras[i*3+2];
+
+    //calculamos los vectores
+    a.x = vertices[vy*3] - vertices[vx*3];
+    a.y = vertices[vy*3+1] - vertices[vx*3+1];
+    a.z = vertices[vy*3+2] - vertices[vx*3+2];
+    b.x = vertices[vz*3] - vertices[vx*3];
+    b.y = vertices[vz*3+1] - vertices[vx*3+1];
+    b.z = vertices[vz*3+2] - vertices[vx*3+2];
+    //hacemos producto vectorial para calcular la normal
+    normal.x += ((a.y * b.z)-(b.y * a.z));
+    normal.y += ((a.z * b.x)-(b.z * a.x));
+    normal.z += ((a.x * b.y)-(b.x * a.y));
+    //normalizamos
+    float modulo = this->modulo(normal);
+    //añadimos al vector de normales
+    this->normales_caras.push_back(normal.x/modulo);
+    this->normales_caras.push_back(normal.y/modulo);
+    this->normales_caras.push_back(normal.z/modulo);
   }
 }
 
 void Objeto3D::calcularNormalesVertices(){
-
+  // for(int i=0; i<caras.size()/3; i++){
+  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
+  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
+  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
+  //
+  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
+  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
+  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
+  //
+  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
+  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
+  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
+  // }
+  //
+  // for(int i=0; i<normales_vertices.size()/3; i++){
+  //   Punto aux;
+  //   aux.x = normales_vertices[i];
+  //   aux.y = normales_vertices[i+1];
+  //   aux.z = normales_vertices[i+2];
+  //   float modulo = this->modulo(aux);
+  //   normales_vertices[i*3] /= modulo;
+  //   normales_vertices[i*3+1] /= modulo;
+  //   normales_vertices[i*3+2] /= modulo;
+  // }
 }
 
 void Objeto3D::setBoundingBox(){
@@ -125,6 +144,7 @@ void Objeto3D::dibujar(unsigned char modo){
     colores.push_back(0.827);
   }
 
+  glEnable(GL_LIGHTING);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
@@ -154,6 +174,12 @@ void Objeto3D::dibujar(unsigned char modo){
       break;
   }
   setBoundingBox();
+
+  glDisable(GL_LIGHTING);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisable(GL_CULL_FACE);
 }
 
 void Objeto3D::dibujarAjedrez(){
@@ -181,20 +207,27 @@ void Objeto3D::dibujarAjedrez(){
     color2.push_back(0.929);
   }
 
+  glEnable(GL_LIGHTING);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
+  glEnable(GL_CULL_FACE);
   glLineWidth(3.0);
   glPointSize(5.0);
   glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
   glColorPointer(3, GL_FLOAT, 0, &color1[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glDrawElements(GL_TRIANGLES, vert1.size(), GL_UNSIGNED_INT, &vert1[0]);
-  //tras pintar la mitad de las caras de un color, "mojamos el pincel" en otro
-  // color y pintamos el resto de caras
+
   glColorPointer(3, GL_FLOAT, 0, &color2[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glDrawElements(GL_TRIANGLES, vert2.size(), GL_UNSIGNED_INT, &vert2[0]);
+
+  glDisable(GL_LIGHTING);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisable(GL_CULL_FACE);
 }
 
 void Objeto3D::dibujarConLineas(){
@@ -210,6 +243,18 @@ void Objeto3D::dibujarConLineas(){
     colores.push_back(0.929);
   }
 
+  glEnable(GL_LIGHT0);
+  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+  const GLfloat posf[4] = {0, 0, 3, 1.0};
+  glLightfv(GL_LIGHT0, GL_POSITION, posf);
+
+  // GLfloat color[4] = { 0, 100, 0, 1.0 } ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color ) ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color ) ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color ) ;
+  // glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 0 ) ;
+
+  glEnable(GL_LIGHTING);
 
   glEnable(GL_CULL_FACE);
   glLineWidth(1.0);
@@ -235,4 +280,10 @@ void Objeto3D::dibujarConLineas(){
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
   glDisable(GL_POLYGON_OFFSET_LINE);
+
+  glDisable(GL_LIGHTING);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisable(GL_CULL_FACE);
 }

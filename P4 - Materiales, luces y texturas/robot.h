@@ -4,9 +4,10 @@
 #include "objeto_revolucion.h"
 #include "cubo.h"
 #include "objetoPLY.h"
+#include "objeto3D.h"
 using namespace std;
 
-class Robot{
+class Robot : public Objeto3D{
 
   private:
     //vector con los vértices para generar mis figuras por revolución
