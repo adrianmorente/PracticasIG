@@ -45,6 +45,8 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
     alpha += suma;
   }
   esfera = new ObjetoRevolucion(perfil_esfera, n);
+  esfera->borrarTapas();
+  esfera->calcularNormales();
 }
 
 

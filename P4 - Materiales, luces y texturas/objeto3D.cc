@@ -68,9 +68,9 @@ void Objeto3D::calcularNormalesVertices(){
     normales_vertices[i*3] /= modulo;
     normales_vertices[i*3+1] /= modulo;
     normales_vertices[i*3+2] /= modulo;
-    normales_vertices[i*3] *= 5;
-    normales_vertices[i*3+1] *= 5;
-    normales_vertices[i*3+2] *= 5;
+    // normales_vertices[i*3] *= 5;
+    // normales_vertices[i*3+1] *= 5;
+    // normales_vertices[i*3+2] *= 5;
   }
 }
 
@@ -237,6 +237,7 @@ void Objeto3D::dibujarAjedrez(){
 
 void Objeto3D::dibujarConLineas(){
 
+  glEnable(GL_NORMALIZE);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
@@ -245,7 +246,7 @@ void Objeto3D::dibujarConLineas(){
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 1);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 120);
 
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
