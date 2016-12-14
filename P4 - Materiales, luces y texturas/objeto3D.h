@@ -12,6 +12,8 @@
 #include <iostream>
 #include <math.h>
 #include "ejes.h"
+#include "luz_posicional.h"
+#include "luz_direccional.h"
 using namespace std;
 
 struct Punto{
@@ -27,6 +29,8 @@ class Objeto3D{
     vector<float> normales_vertices;
     Punto minimo;     //
     Punto maximo;     // atributos BoundingBox
+    LuzPosicional luz_posicional;
+    LuzDireccional luz_direccional;
 
   public:
     Objeto3D();

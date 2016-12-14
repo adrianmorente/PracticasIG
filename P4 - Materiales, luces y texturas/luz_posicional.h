@@ -1,19 +1,17 @@
-#ifndef _LUZ_H
-#define _LUZ_H
+#ifndef _LUZ_POSICIONAL_H
+#define _LUZ_POSICIONAL_H
 
-#include <iostream>
+#include "luz.h"
 #include <vector>
+#include <iostream>
 #include <GL/gl.h>
 #include <GL/glut.h>
 using namespace std;
 
-class Luz{
-
-  protected:
-    vector<float> color;
+class LuzPosicional : public Luz{
 
   public:
-    Luz();
+    LuzPosicional();
     void activar();
     void desactivar();
 

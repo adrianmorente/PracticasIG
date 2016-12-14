@@ -6,6 +6,7 @@ Objeto3D::Objeto3D(){
   this->caras.clear();
   this->normales_caras.clear();
   this->normales_vertices.clear();
+
 }
 
 void Objeto3D::calcularNormales(){
@@ -246,13 +247,10 @@ void Objeto3D::dibujarConLineas(){
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 120);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
 
   glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
-  glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
-  const GLfloat posf[4] = { 500, 0, 500, 1.0 } ; // (x,y,z,w)
-  glLightfv( GL_LIGHT0, GL_POSITION, posf );
+  luz_posicional.activar();
 
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){
@@ -296,6 +294,7 @@ void Objeto3D::dibujarConLineas(){
   glDisable(GL_POLYGON_OFFSET_LINE);
 
   glDisable(GL_LIGHTING);
+  luz_posicional.desactivar();
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
