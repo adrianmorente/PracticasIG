@@ -25,12 +25,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	Height=UI_window_height/10;
 	glViewport(0,0,UI_window_width,UI_window_height);
 
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
-  glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
-  const GLfloat posf[4] = { 0, 500, 0, 1.0 } ; // (x,y,z,w)
-  glLightfv( GL_LIGHT0, GL_POSITION, posf );
-
   /* Creación de objetos */
   char* nombre_ply = "modelos_ply/beethoven.ply";
   vector<float> vertices = {5.0,6.0,0.0, 4.5,5.0,0.0, 4.0,4.0,0.0,
@@ -40,6 +34,17 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   revolucion = new ObjetoRevolucion(vertices, 40);
   ply = new ObjetoPLY(nombre_ply);
   robot = new Robot;
+
+  int n = 60;
+  float alpha = M_PI/2, suma = 2*M_PI/n, radio = 1.0;
+  vector<float> perfil_esfera;
+  for(int i=0; i<=n/2; i++){
+    perfil_esfera.push_back(-radio*cos(alpha));
+    perfil_esfera.push_back(-radio*sin(alpha));
+    perfil_esfera.push_back(0.0);
+    alpha += suma;
+  }
+  esfera = new ObjetoRevolucion(perfil_esfera, n);
 }
 
 
@@ -58,6 +63,10 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       break;
     case '3':
       robot->dibujar(forma_dibujado, grados_hombro_i, grados_hombro_d, grados_cabeza, mov_ojos, grados_pierna_i, grados_pierna_d, mov_aureola);
+      break;
+    case '4':
+      esfera->escalar();
+      esfera->dibujar(forma_dibujado);
       break;
     case '+':
       revolucion->redimensionar(revolucion->getLados()+1);
@@ -191,7 +200,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
     return 0;
   }
 
-  else if(tecla=='1' || tecla=='2' || tecla=='3'){
+  else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4'){
     figura_dibujada = tecla;
     draw_objects(figura_dibujada);
     return 0;

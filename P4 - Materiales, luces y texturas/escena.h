@@ -24,6 +24,7 @@ Ejes ejes;
 ObjetoPLY *ply;
 ObjetoRevolucion *revolucion;
 Robot *robot; //<- mi modelo jerárquico
+ObjetoRevolucion *esfera;
 
 float grados_hombro_i = 0, grados_hombro_d = 0;
 float grados_cabeza = 0;

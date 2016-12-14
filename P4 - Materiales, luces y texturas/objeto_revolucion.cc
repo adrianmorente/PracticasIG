@@ -12,8 +12,7 @@ ObjetoRevolucion::ObjetoRevolucion(vector<float> v_perfil, int n_puntos){
   setBoundingBox();
   generarTapaSuperior();
   generarTapaInferior();
-  this->calcularNormalesCaras();
-  this->calcularNormalesVertices();
+  this->calcularNormales();
 }
 
 

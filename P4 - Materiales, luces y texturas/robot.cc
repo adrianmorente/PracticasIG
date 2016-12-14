@@ -10,7 +10,7 @@ Robot::Robot(){
   generarPerfilToroide();
   toroide = new ObjetoRevolucion(perfil_toroide, 20);
   prisma_tri = new ObjetoRevolucion(perfil_cilindro, 3);
-  this->calcularNormalesCaras();
+  this->calcularNormales();
 }
 
 void Robot::dibujar(unsigned char modo, float grados_hombro_i, float grados_hombro_d, float grados_cabeza, float mov_ojos, float grados_pierna_i, float grados_pierna_d, float mov_aureola){
