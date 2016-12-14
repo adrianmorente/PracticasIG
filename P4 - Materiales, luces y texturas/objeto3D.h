@@ -29,7 +29,6 @@ class Objeto3D{
     Punto maximo;     // atributos BoundingBox
 
   public:
-    Objeto3D();
     void calcularNormalesCaras();
     void calcularNormalesVertices();
     void setBoundingBox();
