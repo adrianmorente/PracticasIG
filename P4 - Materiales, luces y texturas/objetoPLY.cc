@@ -11,4 +11,7 @@ ObjetoPLY::ObjetoPLY(char *nombre){
   cout << "Tamaño PLY: " << vertices.size() << " vertices y " << caras.size() << " caras." << endl;
   this->calcularNormalesCaras();
   this->calcularNormalesVertices();
+  for(int i=0; i<normales_caras.size(); i++){
+    cout << normales_caras[i] << " ";
+  }
 }

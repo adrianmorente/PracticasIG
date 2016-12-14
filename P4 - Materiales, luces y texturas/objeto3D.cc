@@ -143,7 +143,7 @@ void Objeto3D::dibujar(unsigned char modo){
   glEnable(GL_CULL_FACE);
   glLineWidth(1.5);
   glPointSize(5.0);
-  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
+  glNormalPointer(GL_FLOAT, 0, &normales_vertices[0]);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 
@@ -206,7 +206,7 @@ void Objeto3D::dibujarAjedrez(){
   glEnable(GL_CULL_FACE);
   glLineWidth(3.0);
   glPointSize(5.0);
-  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
+  glNormalPointer(GL_FLOAT, 0, &normales_vertices[0]);
   glColorPointer(3, GL_FLOAT, 0, &color1[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glDrawElements(GL_TRIANGLES, vert1.size(), GL_UNSIGNED_INT, &vert1[0]);
@@ -235,18 +235,11 @@ void Objeto3D::dibujarConLineas(){
     colores.push_back(0.929);
   }
 
-  // GLfloat color[4] = { 0, 25, 25, 0 } ;
-  // glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color ) ;
-  // glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color ) ;
-  // glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color ) ;
-  // glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 0 ) ;
-
   glEnable(GL_LIGHTING);
-
   glEnable(GL_CULL_FACE);
   glLineWidth(1.0);
   glPointSize(5.0);
-  glNormalPointer(GL_FLOAT, 0, &normales_caras[0]);
+  glNormalPointer(GL_FLOAT, 0, &normales_vertices[0]);
   glColorPointer(3, GL_FLOAT, 0, &colores[0]);
   glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

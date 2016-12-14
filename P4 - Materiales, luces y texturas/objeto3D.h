@@ -23,8 +23,8 @@ class Objeto3D{
   protected:
     vector<float> vertices;
     vector<int> caras;
-    vector<int> normales_caras;
-    vector<int> normales_vertices;
+    vector<float> normales_caras;
+    vector<float> normales_vertices;
     Punto minimo;     //
     Punto maximo;     // atributos BoundingBox
 
