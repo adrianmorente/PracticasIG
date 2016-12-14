@@ -45,7 +45,7 @@ bool hacer_animacion = false;
 float velocidad_animacion = 0.1;
 
 unsigned char forma_dibujado = 's';
-unsigned char figura_dibujada = '3';
+unsigned char figura_dibujada = '1';
 
 // variables que definen la posicion de la camara en coordenadas polares
 GLfloat Observer_distance;

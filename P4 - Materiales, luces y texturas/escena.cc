@@ -26,7 +26,7 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	glViewport(0,0,UI_window_width,UI_window_height);
 
   /* Creación de objetos */
-  char* nombre_ply = "modelos_ply/cow.ply";
+  char* nombre_ply = "modelos_ply/beethoven.ply";
   vector<float> vertices = {5.0,6.0,0.0, 4.5,5.0,0.0, 4.0,4.0,0.0,
                             3.0,3.0,0.0, 2.0,2.0,0.0, 1.0,1.0,0.0,
                             1.0,0.0,0.0, 1.0,-1.0,0.0, 1.0,-2.0,0.0,

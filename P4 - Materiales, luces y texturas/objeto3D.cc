@@ -240,11 +240,11 @@ void Objeto3D::dibujarConLineas(){
   const GLfloat posf[4] = {0, 0, 3, 1.0};
   glLightfv(GL_LIGHT0, GL_POSITION, posf);
 
-  GLfloat color[4] = { 0, 25, 25, 0 } ;
-  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color ) ;
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color ) ;
-  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color ) ;
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 0 ) ;
+  // GLfloat color[4] = { 0, 25, 25, 0 } ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color ) ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color ) ;
+  // glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color ) ;
+  // glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 0 ) ;
 
   glEnable(GL_LIGHTING);
 
