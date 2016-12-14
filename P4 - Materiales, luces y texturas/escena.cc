@@ -25,6 +25,12 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 	Height=UI_window_height/10;
 	glViewport(0,0,UI_window_width,UI_window_height);
 
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
+  const GLfloat posf[4] = { 0, 500, 0, 1.0 } ; // (x,y,z,w)
+  glLightfv( GL_LIGHT0, GL_POSITION, posf );
+
   /* Creación de objetos */
   char* nombre_ply = "modelos_ply/beethoven.ply";
   vector<float> vertices = {5.0,6.0,0.0, 4.5,5.0,0.0, 4.0,4.0,0.0,

@@ -5,7 +5,7 @@ void Objeto3D::calcularNormalesCaras(){
   Punto a, b; //realmente son los vectores del triangulo
   Punto normal;
   normal.x = normal.y = normal.z = 0;
-  normales_caras.assign(caras.size(), 0);
+  normales_vertices.assign(vertices.size(), 0);
 
   for(int i=0; i<caras.size()/3; i++){
     int vx, vy, vz;
@@ -22,9 +22,9 @@ void Objeto3D::calcularNormalesCaras(){
     b.y = vertices[vz*3+1] - vertices[vx*3+1];
     b.z = vertices[vz*3+2] - vertices[vx*3+2];
     //hacemos producto vectorial para calcular la normal
-    normal.x += ((a.y * b.z)-(b.y * a.z));
-    normal.y += ((a.z * b.x)-(b.z * a.x));
-    normal.z += ((a.x * b.y)-(b.x * a.y));
+    normal.x = ((a.y * b.z)-(b.y * a.z));
+    normal.y = ((a.z * b.x)-(b.z * a.x));
+    normal.z = ((a.x * b.y)-(b.x * a.y));
     //normalizamos
     float modulo = this->modulo(normal);
     //añadimos al vector de normales
@@ -35,30 +35,30 @@ void Objeto3D::calcularNormalesCaras(){
 }
 
 void Objeto3D::calcularNormalesVertices(){
-  // for(int i=0; i<caras.size()/3; i++){
-  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
-  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
-  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
-  //
-  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
-  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
-  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
-  //
-  //   normales_vertices[caras[i*3]*3] += normales_caras[i*3];
-  //   normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
-  //   normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
-  // }
-  //
-  // for(int i=0; i<normales_vertices.size()/3; i++){
-  //   Punto aux;
-  //   aux.x = normales_vertices[i];
-  //   aux.y = normales_vertices[i+1];
-  //   aux.z = normales_vertices[i+2];
-  //   float modulo = this->modulo(aux);
-  //   normales_vertices[i*3] /= modulo;
-  //   normales_vertices[i*3+1] /= modulo;
-  //   normales_vertices[i*3+2] /= modulo;
-  // }
+  for(int i=0; i<caras.size()/3; i++){
+    normales_vertices[caras[i*3]*3] += normales_caras[i*3];
+    normales_vertices[caras[i*3]*3+1] += normales_caras[i*3+1];
+    normales_vertices[caras[i*3]*3+2] += normales_caras[i*3+2];
+
+    normales_vertices[caras[i*3+1]*3] += normales_caras[i*3];
+    normales_vertices[caras[i*3+1]*3+1] += normales_caras[i*3+1];
+    normales_vertices[caras[i*3+1]*3+2] += normales_caras[i*3+2];
+
+    normales_vertices[caras[i*3+2]*3] += normales_caras[i*3];
+    normales_vertices[caras[i*3+2]*3+1] += normales_caras[i*3+1];
+    normales_vertices[caras[i*3+2]*3+2] += normales_caras[i*3+2];
+  }
+
+  for(int i=0; i<normales_vertices.size()/3; i++){
+    Punto aux;
+    aux.x = normales_vertices[i];
+    aux.y = normales_vertices[i+1];
+    aux.z = normales_vertices[i+2];
+    float modulo = this->modulo(aux);
+    normales_vertices[i*3] /= modulo;
+    normales_vertices[i*3+1] /= modulo;
+    normales_vertices[i*3+2] /= modulo;
+  }
 }
 
 void Objeto3D::setBoundingBox(){
@@ -234,11 +234,6 @@ void Objeto3D::dibujarConLineas(){
     colores.push_back(0.584);
     colores.push_back(0.929);
   }
-
-  glEnable(GL_LIGHT0);
-  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-  const GLfloat posf[4] = {0, 0, 3, 1.0};
-  glLightfv(GL_LIGHT0, GL_POSITION, posf);
 
   // GLfloat color[4] = { 0, 25, 25, 0 } ;
   // glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color ) ;
