@@ -6,7 +6,11 @@ Objeto3D::Objeto3D(){
   this->caras.clear();
   this->normales_caras.clear();
   this->normales_vertices.clear();
-
+  GLfloat color[4] = {0, 0.5, 0.5, 1.0};
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
 }
 
 void Objeto3D::calcularNormales(){
@@ -69,9 +73,6 @@ void Objeto3D::calcularNormalesVertices(){
     normales_vertices[i*3] /= modulo;
     normales_vertices[i*3+1] /= modulo;
     normales_vertices[i*3+2] /= modulo;
-    // normales_vertices[i*3] *= 5;
-    // normales_vertices[i*3+1] *= 5;
-    // normales_vertices[i*3+2] *= 5;
   }
 }
 
@@ -139,6 +140,30 @@ void Objeto3D::trasladar(){
 
 void Objeto3D::rotar(float grados){
   glRotatef(grados,0.0f,0.0f,0.0f);
+}
+
+void Objeto3D::setMaterialBase(){
+  GLfloat color[4] = {0, 0.5, 0.5, 1.0};
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
+}
+
+void Objeto3D::setMaterialNegro(){
+  GLfloat color[4] = {0.1, 0.1, 0.1, 1.0};
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
+}
+
+void Objeto3D::setMaterialBlanco(){
+  GLfloat color[4] = {0.9, 0.9, 0.9, 1.0};
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 5);
 }
 
 void Objeto3D::dibujar(unsigned char modo){
@@ -242,15 +267,7 @@ void Objeto3D::dibujarConLineas(){
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
-
-  GLfloat color[4] = {0.5, 0.5, 1, 1.0};
-  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
-
   glEnable(GL_LIGHTING);
-  luz_posicional.activar();
 
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){
@@ -259,7 +276,6 @@ void Objeto3D::dibujarConLineas(){
     colores.push_back(0.929);
   }
 
-  glEnable(GL_LIGHTING);
   glEnable(GL_CULL_FACE);
   glLineWidth(1.0);
   glPointSize(5.0);
@@ -293,8 +309,6 @@ void Objeto3D::dibujarConLineas(){
   glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
   glDisable(GL_POLYGON_OFFSET_LINE);
 
-  glDisable(GL_LIGHTING);
-  luz_posicional.desactivar();
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);

@@ -27,10 +27,9 @@ class Objeto3D{
     vector<int> caras;
     vector<float> normales_caras;
     vector<float> normales_vertices;
+    vector<float> coord_textura;
     Punto minimo;     //
     Punto maximo;     // atributos BoundingBox
-    LuzPosicional luz_posicional;
-    LuzDireccional luz_direccional;
 
   public:
     Objeto3D();
@@ -46,6 +45,9 @@ class Objeto3D{
     void escalar();
     void trasladar();
     void rotar(float grados);
+    void setMaterialBase();
+    void setMaterialNegro();
+    void setMaterialBlanco();
 
     void dibujar(unsigned char modo);
     void dibujarAjedrez();

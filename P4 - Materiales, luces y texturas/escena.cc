@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #include <string>
 #include "escena.h"
+#include "luz_posicional.h"
 
 
 Escena::Escena(){
@@ -35,6 +36,40 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   ply = new ObjetoPLY(nombre_ply);
   robot = new Robot;
 
+  lata_psup = new ObjetoRevolucion("lata-psup.ply");
+  lata_psup->trasladar();
+  lata_psup->calcularNormales();
+
+  lata_pcue = new ObjetoRevolucion("lata-pcue.ply");
+  lata_pcue->trasladar();
+  lata_pcue->calcularNormales();
+
+  lata_pinf = new ObjetoRevolucion("lata-pinf.ply");
+  lata_pinf->trasladar();
+  lata_pinf->calcularNormales();
+
+  peon1 = new ObjetoRevolucion("peon.ply");
+  peon1->escalar();
+  peon1->trasladar();
+  peon1->generarTapaSuperior();
+  peon1->generarTapaInferior();
+  peon1->calcularNormales();
+
+  peon2 = new ObjetoRevolucion("peon.ply");
+  peon2->escalar();
+  peon2->trasladar();
+  peon2->generarTapaSuperior();
+  peon2->generarTapaInferior();
+  peon2->calcularNormales();
+
+  peon3 = new ObjetoRevolucion("peon.ply");
+  peon3->escalar();
+  peon3->trasladar();
+  peon3->generarTapaSuperior();
+  peon3->generarTapaInferior();
+  peon3->calcularNormales();
+
+
   int n = 60;
   float alpha = M_PI/2, suma = 2*M_PI/n, radio = 1.0;
   vector<float> perfil_esfera;
@@ -47,6 +82,7 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   esfera = new ObjetoRevolucion(perfil_esfera, n);
   esfera->borrarTapas();
   esfera->calcularNormales();
+  luz_posicional.activar();
 }
 
 
@@ -70,6 +106,26 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       esfera->escalar();
       esfera->dibujar(forma_dibujado);
       break;
+    case '5':
+      glScalef(15,15,15);
+      glPushMatrix();
+        glPushMatrix();
+          glTranslatef(-5,0,5);
+          peon1->setMaterialBlanco();
+          peon1->dibujar(forma_dibujado);
+        glPopMatrix();
+        glPushMatrix();
+          glTranslatef(0,0,5);
+          peon2->setMaterialNegro();
+          peon2->dibujar(forma_dibujado);
+        glPopMatrix();
+        glPushMatrix();
+          glTranslatef(5,0,5);
+          peon3->setMaterialBase();
+          peon3->dibujar(forma_dibujado);
+        glPopMatrix();
+      glPopMatrix();
+      break;
     case '+':
       revolucion->redimensionar(revolucion->getLados()+1);
       figura_a_dibujar = '2';
@@ -82,11 +138,11 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       }
       cout << "Nº perfiles: " << revolucion->getLados() << endl;
       break;
-    case '5':
+    case '/':
       if(velocidad_animacion > 2)
       velocidad_animacion -= 0.1;
       break;
-    case '6':
+    case '*':
       velocidad_animacion += 0.1;
       break;
     case '7':
@@ -167,6 +223,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       else
         hacer_animacion = true;
   }
+  glDisable(GL_LIGHTING);
 }
 
 
@@ -191,7 +248,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
         || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
         || tecla=='+' || tecla=='-' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.'
-        || tecla=='5' || tecla=='6'){
+        || tecla=='/' || tecla=='*'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
@@ -202,7 +259,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
     return 0;
   }
 
-  else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4'){
+  else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4' || tecla=='5'){
     figura_dibujada = tecla;
     draw_objects(figura_dibujada);
     return 0;
