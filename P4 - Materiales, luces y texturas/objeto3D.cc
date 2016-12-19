@@ -143,26 +143,34 @@ void Objeto3D::rotar(float grados){
 }
 
 void Objeto3D::setMaterialBase(){
-  GLfloat color[4] = {0, 0.5, 0.5, 1.0};
+  GLfloat color[4] = {0.8, 0.0, 0.0, 1.0};
+  GLfloat difuso[4]={0.8,0.0,0.0,1.0};
+  GLfloat especular[4]={0.75,0.75,0.75,1.0};
+
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 128);
 }
 
 void Objeto3D::setMaterialNegro(){
   GLfloat color[4] = {0.1, 0.1, 0.1, 1.0};
+  GLfloat difuso[4]={0.15,0.15,0.15,1.0};
+  GLfloat especular[4]={0.75,0.75,0.75,1.0};
+
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 50);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 128);
 }
 
 void Objeto3D::setMaterialBlanco(){
-  GLfloat color[4] = {0.9, 0.9, 0.9, 1.0};
+  GLfloat color[4] = {0.7, 0.7, 0.7, 1.0};
+  GLfloat difuso[4] = {0.75, 0.75, 0.75, 1.0};
+  GLfloat especular[4]={0.0, 0.0, 0.0, 0.0};
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
   glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 5);
 }
 

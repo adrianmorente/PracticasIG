@@ -49,21 +49,18 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   lata_pinf->calcularNormales();
 
   peon1 = new ObjetoRevolucion("peon.ply");
-  peon1->escalar();
   peon1->trasladar();
   peon1->generarTapaSuperior();
   peon1->generarTapaInferior();
   peon1->calcularNormales();
 
   peon2 = new ObjetoRevolucion("peon.ply");
-  peon2->escalar();
   peon2->trasladar();
   peon2->generarTapaSuperior();
   peon2->generarTapaInferior();
   peon2->calcularNormales();
 
   peon3 = new ObjetoRevolucion("peon.ply");
-  peon3->escalar();
   peon3->trasladar();
   peon3->generarTapaSuperior();
   peon3->generarTapaInferior();
@@ -90,6 +87,8 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 // Funcion que dibuja objetos en la escena
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
+  glEnable(GL_LIGHTING);
+  luz_posicional.activar();
   switch(figura_a_dibujar){
     case '1':
       ply->escalar(); //para visualizarlo a una escala razonable
@@ -110,19 +109,37 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       glScalef(15,15,15);
       glPushMatrix();
         glPushMatrix();
-          glTranslatef(-5,0,5);
+          glTranslatef(-3,1.4,5);
           peon1->setMaterialBlanco();
           peon1->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
-          glTranslatef(0,0,5);
+          glTranslatef(0,1.4,5);
           peon2->setMaterialNegro();
           peon2->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
-          glTranslatef(5,0,5);
+          glTranslatef(3,1.4,5);
           peon3->setMaterialBase();
           peon3->dibujar(forma_dibujado);
+        glPopMatrix();
+        glPushMatrix();
+          glScalef(8,8,8);
+          glPushMatrix();
+            glTranslatef(0,0,0);
+            lata_pinf->setMaterialBase();
+            lata_pinf->dibujar(forma_dibujado);
+          glPopMatrix();
+          glPushMatrix();
+            glTranslatef(0,0,0);
+            lata_pcue->setMaterialBase();
+            lata_pcue->dibujar(forma_dibujado);
+          glPopMatrix();
+          glPushMatrix();
+            glTranslatef(0,0,0);
+            lata_psup->setMaterialBase();
+            lata_psup->dibujar(forma_dibujado);
+          glPopMatrix();
         glPopMatrix();
       glPopMatrix();
       break;
@@ -224,6 +241,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         hacer_animacion = true;
   }
   glDisable(GL_LIGHTING);
+  luz_posicional.desactivar();
 }
 
 
