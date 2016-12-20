@@ -23,7 +23,7 @@ CC = g++
 
 # definicion de objetos
 #
-OBJECTS= practica4.o objeto3D.o luz.o luz_posicional.o luz_direccional.o file_ply_stl.o objetoPLY.o tetraedro.o cubo.o objeto_revolucion.o robot.o escena.o ejes.o
+OBJECTS= practica4.o objeto3D.o luz.o luz_posicional.o luz_direccional.o file_ply_stl.o objetoPLY.o bitmap_image.hpp tetraedro.o cubo.o objeto_revolucion.o robot.o escena.o ejes.o
 # orden que sera ejecutada por defecto
 #
 default : $(TARGETS)

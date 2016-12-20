@@ -18,16 +18,6 @@ void LuzPosicional::desactivar(){
   glDisable(GL_LIGHT0);
 }
 
-vector<float> LuzPosicional::getPosicion(){
-  return posicion;
-}
-
-void LuzPosicional::setPosicion(vector<float> pos){
-  posicion[0] = pos[0];
-  posicion[1] = pos[1];
-  posicion[2] = pos[2];
-}
-
 void LuzPosicional::moverLuzEjeX(int x){
   posicion[0]+=x;
   posicion[1]=3000;

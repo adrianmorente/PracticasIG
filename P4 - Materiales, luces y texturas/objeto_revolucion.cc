@@ -97,6 +97,35 @@ void ObjetoRevolucion::generarContorno(){
       }
     }
   }
+  //TEXTURA
+
+	vector<float> tex_part_1;
+   float s, t,dj;
+   tex_part_1.push_back(0);
+    for (int i = 1; i < perfil.size()/3; i++) {
+      tex_part_1.push_back(tex_part_1[i - 1] + (perfil[i * 3 + 1] - perfil[(i - 1) * 3 + 1]));
+    }
+
+    vector<float>tex_part_2;
+    for (int i = tex_part_1.size() - 1; i >= 0; i--){
+      tex_part_2.push_back(tex_part_1[i]);
+    }
+
+    tex_part_1.swap(tex_part_2);
+    for (int i = 0; i < n_lados; i++){
+      s = i / (n_lados - 1.0);
+      for (int j = 0; j < perfil.size()/3; j++){
+          t = tex_part_1[j] / tex_part_1[0];
+          tex_coord.push_back(t);
+          tex_coord.push_back(s);
+      }
+    }
+
+    vector <float> tex_part_3;
+    for (int i = tex_coord.size() - 1; i >= 0; i--){
+      tex_part_3.push_back(tex_coord[i]);
+    }
+    tex_coord.swap(tex_part_3);
 }
 
 

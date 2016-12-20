@@ -14,9 +14,10 @@ class LuzDireccional : public Luz{
     float alpha, beta;
 
   public:
-    LuzDireccional();
+    LuzDireccional(float posicion[3]);
     void activar();
     void desactivar();
+    void moverLuzEjeX(int x);
 
 };
 

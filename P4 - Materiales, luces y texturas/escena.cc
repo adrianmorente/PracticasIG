@@ -8,6 +8,7 @@
 #include <string>
 #include "escena.h"
 #include "luz_posicional.h"
+#include "bitmap_image.hpp"
 
 
 Escena::Escena(){
@@ -48,23 +49,11 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   lata_pinf->trasladar();
   lata_pinf->calcularNormales();
 
-  peon1 = new ObjetoRevolucion("peon.ply");
-  peon1->trasladar();
-  peon1->generarTapaSuperior();
-  peon1->generarTapaInferior();
-  peon1->calcularNormales();
-
-  peon2 = new ObjetoRevolucion("peon.ply");
-  peon2->trasladar();
-  peon2->generarTapaSuperior();
-  peon2->generarTapaInferior();
-  peon2->calcularNormales();
-
-  peon3 = new ObjetoRevolucion("peon.ply");
-  peon3->trasladar();
-  peon3->generarTapaSuperior();
-  peon3->generarTapaInferior();
-  peon3->calcularNormales();
+  peon = new ObjetoRevolucion("peon.ply");
+  peon->trasladar();
+  peon->generarTapaSuperior();
+  peon->generarTapaInferior();
+  peon->calcularNormales();
 
   float posicion[3] = {10, 3000, 5000};
   luz_posicional = new LuzPosicional(posicion);
@@ -81,6 +70,40 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   esfera = new ObjetoRevolucion(perfil_esfera, n);
   esfera->borrarTapas();
   esfera->calcularNormales();
+
+
+  glGenTextures( 1, &lata_pcue->idTex);
+  glBindTexture(GL_TEXTURE_2D, lata_pcue->idTex);
+
+  bitmap_image img("text-lata-1.bmp"); // Carga la imagen
+  img.bgr_to_rgb(); // Pasa a formato RGB, ya que usa BGR por defecto
+  std::cout << "Imagen de " << img.width() << " por " << img.height() << " pixels.\n";
+  img.horizontal_flip();
+  img.vertical_flip();
+  gluBuild2DMipmaps( GL_TEXTURE_2D,
+    GL_RGB, // formato interno
+    img.width(), // núm. de columnas (arbitrario)
+    img.height(), // núm de filas (arbitrario)
+    GL_RGB, // formato y orden de los texels en RAM
+    GL_UNSIGNED_BYTE, // tipo de cada texel
+    img.data()
+  );
+
+  glGenTextures(1,&peon->idTex);
+  glBindTexture(GL_TEXTURE_2D, peon->idTex);
+
+  bitmap_image img2("text-madera.bmp"); // Carga la imagen
+  img2.bgr_to_rgb(); // Pasa a formato RGB, ya que usa BGR por defecto
+  std::cout << "Imagen de " << img2.width() << " por " << img2.height() << " pixels.\n";
+
+  gluBuild2DMipmaps( GL_TEXTURE_2D,
+    GL_RGB, // formato interno
+    img2.width(), // núm. de columnas (arbitrario)
+    img2.height(), // núm de filas (arbitrario)
+    GL_RGB, // formato y orden de los texels en RAM
+    GL_UNSIGNED_BYTE, // tipo de cada texel
+    img2.data()
+  );
 }
 
 
@@ -88,8 +111,26 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 // Funcion que dibuja objetos en la escena
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
+
+  /*
+  if(activar_luces){
+    if(luz_posicional_encendida){
+      luz_direccional->desactivar();
+      luz_posicional->activar();
+      luz_posicional->moverLuzEjeX(0);
+    }
+    else{
+      luz_posicional->desactivar();
+      luz_direccional->activar();
+      luz_direccional->moverLuzEjeX(0);
+    }
+  }
+  else{
+    glDisable(GL_TEXTURE_2D);
+  }
+  */
+
   luz_posicional->activar();
-  // luz_posicional->moverLuzEjeX(0);
   switch(figura_a_dibujar){
     case '1':
       ply->escalar(); //para visualizarlo a una escala razonable
@@ -111,18 +152,20 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       glPushMatrix();
         glPushMatrix();
           glTranslatef(-3,1.4,5);
-          peon1->setMaterialBlanco();
-          peon1->dibujar(forma_dibujado);
+          peon->setMaterialBlanco();
+          peon->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
           glTranslatef(0,1.4,5);
-          peon2->setMaterialNegro();
-          peon2->dibujar(forma_dibujado);
+          peon->setMaterialNegro();
+          peon->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
           glTranslatef(3,1.4,5);
-          peon3->setMaterialBase();
-          peon3->dibujar(forma_dibujado);
+          glEnable(GL_TEXTURE_2D);
+          peon->setMaterialBase();
+          peon->dibujar(forma_dibujado);
+          glDisable(GL_TEXTURE_2D);
         glPopMatrix();
         glPushMatrix();
           glScalef(8,8,8);

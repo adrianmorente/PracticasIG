@@ -30,8 +30,13 @@ class Objeto3D{
     vector<float> coord_textura;
     Punto minimo;     //
     Punto maximo;     // atributos BoundingBox
+    vector<float> tex_coord;
+    unsigned char *textura;
+    float coefs_s[4];
+    float coefs_t[4];
 
   public:
+    GLuint idTex;
     Objeto3D();
     void calcularNormales();
     void calcularNormalesVertices();

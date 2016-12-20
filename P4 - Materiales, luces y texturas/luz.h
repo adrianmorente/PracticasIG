@@ -11,11 +11,14 @@ class Luz{
 
   protected:
     vector<float> color;
+    vector<float> posicion;
 
   public:
     Luz();
     void activar();
     void desactivar();
+    vector<float> getPosicion();
+    void setPosicion(vector<float> pos);
 
 };
 

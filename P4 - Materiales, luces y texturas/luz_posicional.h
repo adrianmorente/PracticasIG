@@ -10,15 +10,10 @@ using namespace std;
 
 class LuzPosicional : public Luz{
 
-  private:
-    vector<float> posicion = {0.0, 0.0, 0.0};
-
   public:
     LuzPosicional(float posicion[3]);
     void activar();
     void desactivar();
-    vector<float> getPosicion();
-    void setPosicion(vector<float> pos);
     void moverLuzEjeX(int x);
 
 };

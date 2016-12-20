@@ -1,5 +1,6 @@
 #include "objeto3D.h"
 #include "math.h"
+#include "bitmap_image.hpp"
 
 Objeto3D::Objeto3D(){
   this->vertices.clear();
@@ -143,9 +144,9 @@ void Objeto3D::rotar(float grados){
 }
 
 void Objeto3D::setMaterialBase(){
-  GLfloat color[4] = {0.8, 0.0, 0.0, 1.0};
-  GLfloat difuso[4]={0.8,0.0,0.0,1.0};
-  GLfloat especular[4]={0.75,0.75,0.75,1.0};
+  GLfloat color[4] = {0.75, 0.75, 0.75, 1.0};
+  GLfloat difuso[4]={0.5,0.5,0.5,1.0};
+  GLfloat especular[4]={0.1,0.1,0.1,1.0};
 
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
@@ -174,6 +175,17 @@ void Objeto3D::setMaterialBlanco(){
 }
 
 void Objeto3D::dibujar(unsigned char modo){
+
+  //activamos las texturas
+	glEnable( GL_TEXTURE_2D );
+	glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
+	glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+	glTexCoordPointer( 2, GL_FLOAT, 0, &tex_coord[0]);
+	if(idTex==1)
+    glBindTexture(GL_TEXTURE_2D,idTex);
+  else
+    glBindTexture(GL_TEXTURE_2D,idTex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
   vector<float> colores;
   for(int i=0; i<vertices.size()/3; i++){   //aquí el vector de colores que usaremos.
