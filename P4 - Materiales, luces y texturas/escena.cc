@@ -66,6 +66,8 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   peon3->generarTapaInferior();
   peon3->calcularNormales();
 
+  float posicion[3] = {10, 3000, 5000};
+  luz_posicional = new LuzPosicional(posicion);
 
   int n = 60;
   float alpha = M_PI/2, suma = 2*M_PI/n, radio = 1.0;
@@ -79,7 +81,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   esfera = new ObjetoRevolucion(perfil_esfera, n);
   esfera->borrarTapas();
   esfera->calcularNormales();
-  luz_posicional.activar();
 }
 
 
@@ -87,8 +88,8 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 // Funcion que dibuja objetos en la escena
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
-  glEnable(GL_LIGHTING);
-  luz_posicional.activar();
+  luz_posicional->activar();
+  // luz_posicional->moverLuzEjeX(0);
   switch(figura_a_dibujar){
     case '1':
       ply->escalar(); //para visualizarlo a una escala razonable
@@ -143,18 +144,11 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         glPopMatrix();
       glPopMatrix();
       break;
-    case '+':
-      revolucion->redimensionar(revolucion->getLados()+1);
-      figura_a_dibujar = '2';
-      cout << "Nº perfiles: " << revolucion->getLados() << endl;
-      break;
-    case '-':
-      if(revolucion->getLados() > 3){
-        revolucion->redimensionar(revolucion->getLados()-1);
-        figura_a_dibujar = '2';
-      }
-      cout << "Nº perfiles: " << revolucion->getLados() << endl;
-      break;
+    case '6':
+      if(activar_luces)
+        activar_luces=false;
+      else
+        activar_luces=true;
     case '/':
       if(velocidad_animacion > 2)
       velocidad_animacion -= 0.1;
@@ -241,7 +235,7 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
         hacer_animacion = true;
   }
   glDisable(GL_LIGHTING);
-  luz_posicional.desactivar();
+  luz_posicional->desactivar();
 }
 
 
@@ -265,8 +259,8 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
         || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
-        || tecla=='+' || tecla=='-' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.'
-        || tecla=='/' || tecla=='*'){
+        || tecla=='6' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.' || tecla=='/'
+        || tecla=='*'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
@@ -275,6 +269,16 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
     // n/N -> animación: efecto de caminar (mezcla de z/Z y v/V)
     draw_objects(tecla);
     return 0;
+  }
+
+  else if(tecla=='+'){
+    luz_posicional->moverLuzEjeX(150);
+    draw_objects(figura_dibujada);
+  }
+
+  else if(tecla=='-'){
+    luz_posicional->moverLuzEjeX(-150);
+    draw_objects(figura_dibujada);
   }
 
   else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4' || tecla=='5'){

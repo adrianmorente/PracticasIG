@@ -154,24 +154,23 @@ void Objeto3D::setMaterialBase(){
 }
 
 void Objeto3D::setMaterialNegro(){
-  GLfloat color[4] = {0.1, 0.1, 0.1, 1.0};
-  GLfloat difuso[4]={0.15,0.15,0.15,1.0};
-  GLfloat especular[4]={0.75,0.75,0.75,1.0};
+  GLfloat ambiente[4] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat difuso[4] = {0.2, 0.2, 0.2, 1.0};
+  GLfloat especular[4]={0.6,0.6,0.6,1.0};
 
-  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, ambiente);
   glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
   glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 128);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 20);
 }
 
 void Objeto3D::setMaterialBlanco(){
-  GLfloat color[4] = {0.7, 0.7, 0.7, 1.0};
-  GLfloat difuso[4] = {0.75, 0.75, 0.75, 1.0};
+  GLfloat color[4] = {0.6, 0.6, 0.6, 1.0};
   GLfloat especular[4]={0.0, 0.0, 0.0, 0.0};
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
-  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
-  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 5);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 10);
 }
 
 void Objeto3D::dibujar(unsigned char modo){

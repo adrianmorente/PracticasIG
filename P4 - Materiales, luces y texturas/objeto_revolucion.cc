@@ -18,7 +18,7 @@ ObjetoRevolucion::ObjetoRevolucion(vector<float> v_perfil, int n_puntos){
 
 ObjetoRevolucion::ObjetoRevolucion(char* nombre_archivo){
   _file_ply lector;
-  this->n_lados = 30;   //<-- un número de ejemplo
+  this->n_lados = 60;   //<-- un número de ejemplo
   lector.open(nombre_archivo);
   this->caras.clear();
   lector.read(this->vertices, this->caras);

@@ -21,8 +21,6 @@ private:
 // tamaño de los ejes
 #define AXIS_SIZE 5000
 Ejes ejes;
-LuzPosicional luz_posicional;
-LuzDireccional luz_direccional;
 ObjetoPLY *ply;
 ObjetoRevolucion *revolucion;
 Robot *robot;
@@ -36,7 +34,6 @@ float mov_ojos = 0;
 float grados_pierna_i = 0, grados_pierna_d = 0;
 float grados_cuerpo = 0;
 float mov_aureola = 0;
-
 bool cabeza_izquierda = true, cabeza_derecha = false;
 bool ojos_fuera = true, ojos_dentro = false;
 bool aureola_arriba = true, aureola_abajo = false;
@@ -46,11 +43,14 @@ bool b_izdo_delante = true, b_izdo_atras = false;
 bool b_dcho_delante = true, b_dcho_atras = false;
 
 bool hacer_animacion = false;
-
 float velocidad_animacion = 0.1;
 
+LuzPosicional *luz_posicional;
+LuzDireccional *luz_direccional;
+bool activar_luces = true;
+
 unsigned char forma_dibujado = 's';
-unsigned char figura_dibujada = '1';
+unsigned char figura_dibujada = '5';
 
 // variables que definen la posicion de la camara en coordenadas polares
 GLfloat Observer_distance;
@@ -70,7 +70,7 @@ private:
 	void change_observer();
 
 public:
-     Escena();
+  Escena();
 	void inicializar(int UI_window_width,int UI_window_height);
 	void redimensionar(int newWidth,int newHeight) ;
 
