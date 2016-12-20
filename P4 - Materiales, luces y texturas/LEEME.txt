@@ -1,0 +1,34 @@
+Autor: Adrián Morente Gabaldón
+
+- Instrucciones de compilación:
+
+    · Con ejecutar 'make', basta. Nos ayudamos del archivo Makefile aportado por
+      el profesorado (obviamente con las inclusiones de los archivos generados
+      por mí).
+
+- Instrucciones de ejecución: al ejecutar el programa, la imagen mostrada por
+  defecto será el modelo jerárquico en modo 'sólido+líneas'. Se puede cambiar la
+  figura dibujada con las siguientes teclas:
+
+    · '1' - objeto leído de fichero ply.
+    · '2' - objeto de revolución (de la práctica anterior).
+    · '3' - modelo jerárquico: un robot, en mi caso.
+
+- La forma de dibujado se puede cambiar con las siguientes teclas:
+
+    · 'l' - líneas
+    · 's' - sólido + líneas
+    · 'p' - puntos
+    · 'a' - ajedrez
+
+    · 'q' - finalización del programa
+
+- Para nuestro modelo jerárquico, tendremos las siguientes teclas disponibles
+  para la modificación de los grados de libertad:
+
+    · 'z/Z' - modificar rotación de los dos brazos a la vez (adelante/atrás)
+    · 'x/X' - modificar rotación de la cabeza (izquierda/derecha) máx 90 grados
+    · 'c/C' - modificar traslación de los ojos (adelante/atrás)
+    · 'v/V' - modificar rotación de las dos piernas a la vez (adelante/atrás)
+    · 'b/B' - modificar traslación de la aureola (arriba/abajo)
+    · '.' - activar/desactivar animación automática
