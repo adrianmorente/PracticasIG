@@ -10,7 +10,7 @@ using namespace std;
 class Luz{
 
   protected:
-    vector<float> color;
+    vector<float> ambiental, difuso, especular;
     vector<float> posicion;
 
   public:
@@ -19,6 +19,12 @@ class Luz{
     void desactivar();
     vector<float> getPosicion();
     void setPosicion(vector<float> pos);
+    void setColorRojo();
+    void setColorVerde();
+    void setColorAzul();
+    void moverLuzEjeX(int x);
+    void moverLuzEjeY(int y);
+    void moverLuzEjeZ(int z);
 
 };
 

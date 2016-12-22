@@ -49,11 +49,23 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   lata_pinf->trasladar();
   lata_pinf->calcularNormales();
 
-  peon = new ObjetoRevolucion("peon.ply");
-  peon->trasladar();
-  peon->generarTapaSuperior();
-  peon->generarTapaInferior();
-  peon->calcularNormales();
+  peon1 = new ObjetoRevolucion("peon.ply");
+  peon1->trasladar();
+  peon1->generarTapaSuperior();
+  peon1->generarTapaInferior();
+  peon1->calcularNormales();
+
+  peon2 = new ObjetoRevolucion("peon.ply");
+  peon2->trasladar();
+  peon2->generarTapaSuperior();
+  peon2->generarTapaInferior();
+  peon2->calcularNormales();
+
+  peon3 = new ObjetoRevolucion("peon.ply");
+  peon3->trasladar();
+  peon3->generarTapaSuperior();
+  peon3->generarTapaInferior();
+  peon3->calcularNormales();
 
   float posicion[3] = {10, 3000, 5000};
   luz_posicional = new LuzPosicional(posicion);
@@ -70,6 +82,16 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   esfera = new ObjetoRevolucion(perfil_esfera, n);
   esfera->borrarTapas();
   esfera->calcularNormales();
+
+  cubo = new Cubo;
+  cubo->calcularNormales();
+
+  luz_direccional1 = new LuzDireccional(-10,30,5);
+  luz_direccional1->setColorRojo();
+  luz_direccional2 = new LuzDireccional( 0,30,-5);
+  luz_direccional2->setColorVerde();
+  luz_direccional3 = new LuzDireccional(10,30,-0);
+  luz_direccional3->setColorAzul();
 
 
   glGenTextures( 1, &lata_pcue->idTex);
@@ -89,8 +111,8 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
     img.data()
   );
 
-  glGenTextures(1,&peon->idTex);
-  glBindTexture(GL_TEXTURE_2D, peon->idTex);
+  glGenTextures(1,&peon3->idTex);
+  glBindTexture(GL_TEXTURE_2D, peon3->idTex);
 
   bitmap_image img2("text-madera.bmp"); // Carga la imagen
   img2.bgr_to_rgb(); // Pasa a formato RGB, ya que usa BGR por defecto
@@ -112,23 +134,29 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar) {
 
-  /*
   if(activar_luces){
     if(luz_posicional_encendida){
-      luz_direccional->desactivar();
+      luz_direccional1->desactivar();
+      luz_direccional2->desactivar();
+      luz_direccional3->desactivar();
       luz_posicional->activar();
-      luz_posicional->moverLuzEjeX(0);
     }
     else{
       luz_posicional->desactivar();
-      luz_direccional->activar();
-      luz_direccional->moverLuzEjeX(0);
+      luz_direccional1->activar();
+      luz_direccional1->setColorRojo();
+      luz_direccional2->activar();
+      luz_direccional2->setColorVerde();
+      luz_direccional3->activar();
+      luz_direccional3->setColorAzul();
+      luz_direccional1->mover(rand()%1000);
+      luz_direccional2->mover(rand()%1000);
+      luz_direccional3->mover(rand()%1000);
     }
   }
   else{
     glDisable(GL_TEXTURE_2D);
   }
-  */
 
   luz_posicional->activar();
   switch(figura_a_dibujar){
@@ -151,47 +179,48 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       glScalef(15,15,15);
       glPushMatrix();
         glPushMatrix();
+          glScalef(300,1,300);
+          glTranslatef(-0.5, -1, -0.5);
+          cubo->setMaterialBlanco();
+          cubo->dibujar(forma_dibujado);
+        glPopMatrix();
+        glPushMatrix();
           glTranslatef(-3,1.4,5);
-          peon->setMaterialBlanco();
-          peon->dibujar(forma_dibujado);
+          peon1->setMaterialBlanco();
+          peon1->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
           glTranslatef(0,1.4,5);
-          peon->setMaterialNegro();
-          peon->dibujar(forma_dibujado);
+          peon2->setMaterialNegro();
+          peon2->dibujar(forma_dibujado);
         glPopMatrix();
         glPushMatrix();
           glTranslatef(3,1.4,5);
           glEnable(GL_TEXTURE_2D);
-          peon->setMaterialBase();
-          peon->dibujar(forma_dibujado);
+          peon3->setMaterialBase();
+          peon3->dibujar(forma_dibujado);
           glDisable(GL_TEXTURE_2D);
         glPopMatrix();
         glPushMatrix();
           glScalef(8,8,8);
           glPushMatrix();
             glTranslatef(0,0,0);
-            lata_pinf->setMaterialBase();
+            lata_pinf->setMaterialBrillante();
             lata_pinf->dibujar(forma_dibujado);
           glPopMatrix();
           glPushMatrix();
             glTranslatef(0,0,0);
-            lata_pcue->setMaterialBase();
+            lata_pcue->setMaterialBrillante();
             lata_pcue->dibujar(forma_dibujado);
           glPopMatrix();
           glPushMatrix();
             glTranslatef(0,0,0);
-            lata_psup->setMaterialBase();
+            lata_psup->setMaterialBrillante();
             lata_psup->dibujar(forma_dibujado);
           glPopMatrix();
         glPopMatrix();
       glPopMatrix();
       break;
-    case '6':
-      if(activar_luces)
-        activar_luces=false;
-      else
-        activar_luces=true;
     case '/':
       if(velocidad_animacion > 2)
       velocidad_animacion -= 0.1;
@@ -277,7 +306,6 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
       else
         hacer_animacion = true;
   }
-  glDisable(GL_LIGHTING);
   luz_posicional->desactivar();
 }
 
@@ -302,8 +330,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
   else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
         || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
-        || tecla=='6' || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.' || tecla=='/'
-        || tecla=='*'){
+        || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.' || tecla=='/' || tecla=='*'){
     // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
     // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
     // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
@@ -314,13 +341,37 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
     return 0;
   }
 
+  else if(tecla=='6'){
+    if(luz_posicional_encendida)
+      luz_posicional_encendida = false;
+    else
+      luz_posicional_encendida = true;
+    return 0;
+  }
+
   else if(tecla=='+'){
     luz_posicional->moverLuzEjeX(150);
     draw_objects(figura_dibujada);
+    return 0;
   }
 
   else if(tecla=='-'){
     luz_posicional->moverLuzEjeX(-150);
+    draw_objects(figura_dibujada);
+    return 0;
+  }
+
+  else if(tecla=='o'){
+    // luz_direccional1->moverLuzEjeX(5);
+    // luz_direccional1->moverLuzEjeZ(5);
+    // luz_direccional2->moverLuzEjeX(5);
+    // luz_direccional2->moverLuzEjeZ(5);
+    // luz_direccional3->moverLuzEjeX(5);
+    // luz_direccional3->moverLuzEjeZ(5);
+    draw_objects(figura_dibujada);
+  }
+
+  else if(tecla=='i'){
     draw_objects(figura_dibujada);
   }
 
@@ -488,5 +539,10 @@ void Escena::animarRobot(){
       p_izda_delante = true;
       p_izda_atras = false;
     }
+
+    float n = (rand() % 10000)+500;
+    luz_direccional1->mover(n);
+    luz_direccional2->mover(-n);
+    luz_direccional3->mover(n/2);
   }
 }
