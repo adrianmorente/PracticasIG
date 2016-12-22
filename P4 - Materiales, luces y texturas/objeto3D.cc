@@ -145,8 +145,19 @@ void Objeto3D::rotar(float grados){
 
 void Objeto3D::setMaterialBase(){
   GLfloat color[4] = {0.75, 0.75, 0.75, 1.0};
-  GLfloat difuso[4]={0.5,0.5,0.5,1.0};
-  GLfloat especular[4]={0.1,0.1,0.1,1.0};
+  GLfloat difuso[4]={0.6,0.6,0.6,1.0};
+  GLfloat especular[4]={1.0,1.0,1.0,1.0};
+
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, especular);
+  glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 128);
+}
+
+void Objeto3D::setMaterialBrillante(){
+  GLfloat color[4] = {0.75, 0.75, 0.75, 1.0};
+  GLfloat difuso[4]={0.8,0.8,0.8,1.0};
+  GLfloat especular[4]={1.0,1.0,1.0,1.0};
 
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, color);
   glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, difuso);
@@ -220,7 +231,13 @@ void Objeto3D::dibujar(unsigned char modo){
       break;
     case 'a':
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-      dibujarAjedrez();
+      glBegin(GL_LINES);
+        for (int i=0; i<normales_vertices.size(); i+=3){
+          glVertex3f(vertices[i], vertices[i+1], vertices[i+2]);
+          glVertex3f(vertices[i]+normales_vertices[i],vertices[i+1]+ normales_vertices[i+1], vertices[i+2]+normales_vertices[i+2]);
+        }
+      glEnd();
+      dibujarConLineas();
       break;
   }
   setBoundingBox();
@@ -304,13 +321,6 @@ void Objeto3D::dibujarConLineas(){
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glDrawElements(GL_TRIANGLES, caras.size(), GL_UNSIGNED_INT, &caras[0]);
   glPolygonOffset(-1,-1);
-
-  // glBegin(GL_LINES);
-  //   for (int i=0; i<normales_vertices.size(); i+=3){
-  //     glVertex3f(vertices[i], vertices[i+1], vertices[i+2]);
-  //     glVertex3f(vertices[i]+normales_vertices[i],vertices[i+1]+ normales_vertices[i+1], vertices[i+2]+normales_vertices[i+2]);
-  //   }
-  // glEnd();
 
   glEnable(GL_POLYGON_OFFSET_LINE);
   colores.clear();

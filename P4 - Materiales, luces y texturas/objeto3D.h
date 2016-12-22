@@ -34,6 +34,7 @@ class Objeto3D{
     unsigned char *textura;
     float coefs_s[4];
     float coefs_t[4];
+    bool pintar_normales = false;
 
   public:
     GLuint idTex;
@@ -51,6 +52,7 @@ class Objeto3D{
     void trasladar();
     void rotar(float grados);
     void setMaterialBase();
+    void setMaterialBrillante();
     void setMaterialNegro();
     void setMaterialBlanco();
 

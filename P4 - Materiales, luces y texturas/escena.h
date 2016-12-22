@@ -26,7 +26,8 @@ ObjetoRevolucion *revolucion;
 Robot *robot;
 ObjetoRevolucion *esfera;
 ObjetoRevolucion *lata_psup, *lata_pcue, *lata_pinf;
-ObjetoRevolucion *peon;
+ObjetoRevolucion *peon1, *peon2, *peon3;
+Cubo *cubo;
 
 float grados_hombro_i = 0, grados_hombro_d = 0;
 float grados_cabeza = 0;
@@ -46,8 +47,8 @@ bool hacer_animacion = false;
 float velocidad_animacion = 0.1;
 
 LuzPosicional *luz_posicional;
-LuzDireccional *luz_direccional;
-bool activar_luces = true;
+LuzDireccional *luz_direccional1, *luz_direccional2, *luz_direccional3;
+bool activar_luces = true, luz_posicional_encendida = false;
 
 unsigned char forma_dibujado = 's';
 unsigned char figura_dibujada = '5';
