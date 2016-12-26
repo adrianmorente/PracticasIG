@@ -299,6 +299,7 @@ void Escena::dibujar(){
 	draw_objects(figura_dibujada);
 }
 
+
 int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
 
   std::cout << "Tecla " << tecla << std::endl;
@@ -380,35 +381,28 @@ switch (Tecla1){
 // Funcion para definir la transformación de proyección
 //***************************************************************************
 
-void Escena::change_projection()  {
-glMatrixMode(GL_PROJECTION);
-glLoadIdentity();
-glFrustum(-Width,Width,-Height,Height,Front_plane,Back_plane);
+void Escena::change_projection(){
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glFrustum(-Width,Width,-Height,Height,Front_plane,Back_plane);
 }
 
-
-void Escena::redimensionar(int newWidth,int newHeight) {
-change_projection();
-Width=newWidth/10;
-Height=newHeight/10;
-glViewport(0,0,newWidth,newHeight);
+void Escena::redimensionar(int newWidth,int newHeight){
+  change_projection();
+  Width=newWidth/10;
+  Height=newHeight/10;
+  glViewport(0,0,newWidth,newHeight);
 }
-
 
 //**************************************************************************
 // Funcion para definir la transformaci�n de vista (posicionar la camara)
 //***************************************************************************
 
-
-
-void Escena::change_observer() {
-
-// posicion del observador
-glMatrixMode(GL_MODELVIEW);
-glLoadIdentity();
-glTranslatef(0,0,-Observer_distance);
-glRotatef(Observer_angle_x,1,0,0);
-glRotatef(Observer_angle_y,0,1,0);
+void Escena::change_observer(){
+  // posicion del observador
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  escena.camaras[camaraActiva].setObservador();
 }
 
 
@@ -416,9 +410,8 @@ glRotatef(Observer_angle_y,0,1,0);
 // Funcion que dibuja los ejes utilizando la primitiva grafica de lineas
 //***************************************************************************
 
-void Escena::draw_axis()
-{
-ejes.draw();
+void Escena::draw_axis(){
+  ejes.draw();
 }
 
 //**************************************************************************

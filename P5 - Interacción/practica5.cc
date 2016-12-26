@@ -80,6 +80,22 @@ void idle(){
 	glutPostRedisplay();
 }
 
+void clickRaton(int boton, int estado, int x, int y){
+	if(boton==GLUT_RIGHT_BUTTON && estado==GLUT_DOWN){
+		
+		glutPostRedisplay();
+	}
+}
+
+void ratonMovido(int x, int y){
+	if(estadoRaton == MOVIEND_CAMARA_FIRSTPERSON){
+		escena.camaras[camaraActiva].girar(x-xant, y-yant);
+		xant = x;
+		yant = y;
+	}
+	glutPostRedisplay();
+}
+
 
 
 //***************************************************************************
@@ -123,6 +139,9 @@ glutSpecialFunc(special_keys);
 escena->inicializar(UI_window_width,UI_window_height);
 // inicio del bucle de eventos
 glutIdleFunc( idle );
+// glutMouseFunc( clickRaton );
+// glutMotionFunc( ratonMovido );
+
 glutMainLoop();
 return 0;
 }

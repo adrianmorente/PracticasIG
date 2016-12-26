@@ -28,6 +28,8 @@ ObjetoRevolucion *esfera;
 ObjetoRevolucion *lata_psup, *lata_pcue, *lata_pinf;
 ObjetoRevolucion *peon1, *peon2, *peon3;
 Cubo *cubo;
+Camara camaras[3];
+int camaraActiva;
 
 float grados_hombro_i = 0, grados_hombro_d = 0;
 float grados_cabeza = 0;
