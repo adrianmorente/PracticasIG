@@ -86,14 +86,6 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   cubo = new Cubo;
   cubo->calcularNormales();
 
-  luz_direccional1 = new LuzDireccional(-10,30,5);
-  luz_direccional1->setColorRojo();
-  luz_direccional2 = new LuzDireccional( 0,30,-5);
-  luz_direccional2->setColorVerde();
-  luz_direccional3 = new LuzDireccional(10,30,-0);
-  luz_direccional3->setColorAzul();
-
-
   glGenTextures( 1, &lata_pcue->idTex);
   glBindTexture(GL_TEXTURE_2D, lata_pcue->idTex);
 
@@ -136,22 +128,12 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
 
   if(activar_luces){
     if(luz_posicional_encendida){
-      luz_direccional1->desactivar();
-      luz_direccional2->desactivar();
-      luz_direccional3->desactivar();
+      // luz_direccional->desactivar();
       luz_posicional->activar();
     }
     else{
       luz_posicional->desactivar();
-      luz_direccional1->activar();
-      luz_direccional1->setColorRojo();
-      luz_direccional2->activar();
-      luz_direccional2->setColorVerde();
-      luz_direccional3->activar();
-      luz_direccional3->setColorAzul();
-      luz_direccional1->mover(rand()%1000);
-      luz_direccional2->mover(rand()%1000);
-      luz_direccional3->mover(rand()%1000);
+      // luz_direccional->activar();
     }
   }
   else{
@@ -362,12 +344,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
   }
 
   else if(tecla=='o'){
-    // luz_direccional1->moverLuzEjeX(5);
-    // luz_direccional1->moverLuzEjeZ(5);
-    // luz_direccional2->moverLuzEjeX(5);
-    // luz_direccional2->moverLuzEjeZ(5);
-    // luz_direccional3->moverLuzEjeX(5);
-    // luz_direccional3->moverLuzEjeZ(5);
+    // luz_direccional->moverLuzEjeX(5);
     draw_objects(figura_dibujada);
   }
 
@@ -539,10 +516,5 @@ void Escena::animarRobot(){
       p_izda_delante = true;
       p_izda_atras = false;
     }
-
-    float n = (rand() % 10000)+500;
-    luz_direccional1->mover(n);
-    luz_direccional2->mover(-n);
-    luz_direccional3->mover(n/2);
   }
 }

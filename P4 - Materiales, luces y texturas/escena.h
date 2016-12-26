@@ -47,7 +47,7 @@ bool hacer_animacion = false;
 float velocidad_animacion = 0.1;
 
 LuzPosicional *luz_posicional;
-LuzDireccional *luz_direccional1, *luz_direccional2, *luz_direccional3;
+LuzDireccional *luz_direccional;
 bool activar_luces = true, luz_posicional_encendida = false;
 
 unsigned char forma_dibujado = 's';
