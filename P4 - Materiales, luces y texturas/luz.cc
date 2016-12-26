@@ -1,6 +1,10 @@
 #include "luz.h"
 
 Luz::Luz(){
+<<<<<<< HEAD
+=======
+  this->color = {1.0, 1.0, 1.0};
+>>>>>>> 3dda2c226d644775d7b36c943c8b7ed746b32d35
   this->posicion.assign(3, 0.0);
 }
 
@@ -13,6 +17,7 @@ void Luz::setPosicion(vector<float> pos){
   posicion[1] = pos[1];
   posicion[2] = pos[2];
 }
+<<<<<<< HEAD
 
 void Luz::setColorRojo(){
   glEnable(GL_LIGHTING);
@@ -73,3 +78,5 @@ void Luz::moverLuzEjeZ(int z){
   GLfloat position[4] = {posicion[0], posicion[1], posicion[2], 0.0};
   glLightfv(GL_LIGHT1, GL_POSITION, position);
 }
+=======
+>>>>>>> 3dda2c226d644775d7b36c943c8b7ed746b32d35
