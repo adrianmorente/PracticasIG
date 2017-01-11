@@ -118,6 +118,21 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
     GL_UNSIGNED_BYTE, // tipo de cada texel
     img2.data()
   );
+
+
+  //inicialización y posicionamiento de cámaras
+  camaras[0] = new Camara();
+  camaras[0]->setEye(300,0,0);
+  camaras[0]->setAt(0,0,0);
+  camaras[0]->setUp(0,1,0);
+  camaras[1] = new Camara();
+  camaras[1]->setEye(0,300,0);
+  camaras[1]->setAt(0,0,0);
+  camaras[1]->setUp(0,0,1);
+  camaras[2] = new Camara();
+  camaras[2]->setEye(0,0,300);
+  camaras[2]->setAt(0,0,0);
+  camaras[2]->setUp(1,0,0);
 }
 
 
@@ -402,7 +417,9 @@ void Escena::change_observer(){
   // posicion del observador
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  escena.camaras[camaraActiva].setObservador();
+  glTranslatef(0,0,-Observer_distance);
+  glRotatef(Observer_angle_x,1,0,0);
+  glRotatef(Observer_angle_y,0,1,0);
 }
 
 

@@ -17,6 +17,9 @@ private:
   public:
     Camara();
     void girar(float x, float y);
+    void setEye(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ);
+    void setAt(GLdouble atX, GLdouble atY, GLdouble atZ);
+    void setUp(GLdouble upX, GLdouble upY, GLdouble upZ);
     void setObservador();
 };
 

@@ -80,21 +80,21 @@ void idle(){
 	glutPostRedisplay();
 }
 
-void clickRaton(int boton, int estado, int x, int y){
-	if(boton==GLUT_RIGHT_BUTTON && estado==GLUT_DOWN){
-		
-		glutPostRedisplay();
-	}
-}
-
-void ratonMovido(int x, int y){
-	if(estadoRaton == MOVIEND_CAMARA_FIRSTPERSON){
-		escena.camaras[camaraActiva].girar(x-xant, y-yant);
-		xant = x;
-		yant = y;
-	}
-	glutPostRedisplay();
-}
+// void clickRaton(int boton, int estado, int x, int y){
+// 	if(boton==GLUT_RIGHT_BUTTON && estado==GLUT_DOWN){
+//
+// 		glutPostRedisplay();
+// 	}
+// }
+//
+// void ratonMovido(int x, int y){
+// 	if(estadoRaton == MOVIENDO_CAMARA_FIRSTPERSON){
+// 		escena->camaras[camaraActiva].girar(x-xant, y-yant);
+// 		xant = x;
+// 		yant = y;
+// 	}
+// 	glutPostRedisplay();
+// }
 
 
 
