@@ -15,7 +15,9 @@
 #include "escena.h"
 
 Escena *escena;
-
+Camara camaraActiva;
+int pos_x, pos_y;
+int estado;
 
 
 void draw_scene(void)  {
@@ -80,21 +82,53 @@ void idle(){
 	glutPostRedisplay();
 }
 
-// void clickRaton(int boton, int estado, int x, int y){
-// 	if(boton==GLUT_RIGHT_BUTTON && estado==GLUT_DOWN){
-//
-// 		glutPostRedisplay();
-// 	}
-// }
-//
-// void ratonMovido(int x, int y){
-// 	if(estadoRaton == MOVIENDO_CAMARA_FIRSTPERSON){
-// 		escena->camaras[camaraActiva].girar(x-xant, y-yant);
-// 		xant = x;
-// 		yant = y;
-// 	}
-// 	glutPostRedisplay();
-// }
+int pick(int x, int y){
+	// // 1. Declarar buffer de selección
+	// glSelectBuffer(...);
+	// // 2. Obtener los parámetros del viewport
+	// glGetIntegerv(GL_VIEWPORT, viewport);
+	// // 3. Pasar OpenGL a modo selección
+	// glRenderMode(GL_SELECT);
+	// // 4. Fijar la transformación de proyección para la seleccion
+	// glMatrixMode(GL_PROJECTION);
+	// glLoadIdentity();
+	// gluPickMatrix(x,(viewport[3] - y),5.0, 5.0, viewport);
+	// MatrizProyeccion(); // SIN REALIZAR LoadIdentity !
+	// // 5. Dibujar la escena con Nombres
+	// dibujarConNombres();
+	// // 6. Pasar OpenGL a modo render
+	// hits = glRenderMode (GL_RENDER);
+	// // 7. Restablecer la transformación de proyección (sin gluPickMatrix)
+	// // 8. Analizar el contenido del buffer de selección
+	// // 9. Devolver el resultado
+}
+
+void clickRaton(int boton, int estado, int x, int y){
+	if(boton==GLUT_RIGHT_BUTTON){
+
+		if(estado==GLUT_DOWN){
+			cout << "Se pulsa el botón derecho, por lo que se entra en el estado -moviendo cámara-";
+			pos_x = x;
+			pos_y = y;
+		}
+		else{
+			cout << "Se levanta el botón derecho, por lo que se sale del estado -moviendo cámara-";
+		}
+	}
+	else if(boton==GLUT_LEFT_BUTTON){
+		pick(x,y);
+	}
+}
+
+int xant, yant;
+void ratonMovido(int x, int y){
+	if(estado == GLUT_DOWN){
+		// escena->camaras[escena->camaraActiva]->girar(x-xant, y-yant);
+		xant = x;
+		yant = y;
+	}
+	glutPostRedisplay();
+}
 
 
 

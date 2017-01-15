@@ -29,8 +29,12 @@ ObjetoRevolucion *esfera;
 ObjetoRevolucion *lata_psup, *lata_pcue, *lata_pinf;
 ObjetoRevolucion *peon1, *peon2, *peon3;
 Cubo *cubo;
-Camara *camaras[3];
-int camaraActiva;
+
+Camara camaras[4];
+int camaraActiva = 0;
+bool modo_camara = true;
+bool avanzar, retroceder, girar_d, girar_i, resetear;
+int velocidad_camara = 5;
 
 float grados_hombro_i = 0, grados_hombro_d = 0;
 float grados_cabeza = 0;
@@ -69,7 +73,7 @@ private:
 	void draw_axis();
 	void draw_objects(unsigned char Tecla1);
 
-//Transformación de cámara
+	// Transformación de cámara
 	void change_projection();
 	void change_observer();
 
@@ -81,10 +85,14 @@ public:
 	// Dibujar
 	void dibujar() ;
 
-	// Interacci�n con la escena
+	// Interacción con la escena
 	int teclaPulsada(unsigned char tecla,int x,int y) ;
 	void teclaEspecial(int Tecla1,int x,int y);
 
+	void imprimirMenu();
+	void imprimirMenuCamara();
 	void animarRobot();
+	Camara getCamaraActiva();
+	void actualizarCamara();
 };
 #endif

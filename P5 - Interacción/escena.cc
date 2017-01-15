@@ -119,44 +119,48 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
     img2.data()
   );
 
-
   //inicialización y posicionamiento de cámaras
-  camaras[0] = new Camara();
-  camaras[0]->setEye(300,0,0);
-  camaras[0]->setAt(0,0,0);
-  camaras[0]->setUp(0,1,0);
-  camaras[1] = new Camara();
-  camaras[1]->setEye(0,300,0);
-  camaras[1]->setAt(0,0,0);
-  camaras[1]->setUp(0,0,1);
-  camaras[2] = new Camara();
-  camaras[2]->setEye(0,0,300);
-  camaras[2]->setAt(0,0,0);
-  camaras[2]->setUp(1,0,0);
+  camaras[0].setEye(0,0,10);
+  camaras[0].setAt(0,0,0);
+  camaras[0].setUp(0,1,0);
+
+  camaras[1].setEye(10,0,0);
+  camaras[1].setAt(0,0,0);
+  camaras[1].setUp(0,1,0);
+
+  camaras[2].setEye(0,10,0);
+  camaras[2].setAt(0,0,0);
+  camaras[2].setUp(0,0,-1);
+
+  avanzar = retroceder = girar_d = girar_i = false;
 }
 
 
 //**************************************************************************
 // Funcion que dibuja objetos en la escena
 //***************************************************************************
-void Escena::draw_objects(unsigned char figura_a_dibujar) {
+void Escena::draw_objects(unsigned char figura_a_dibujar){
 
-  if(activar_luces){
-    if(luz_posicional_encendida){
-      // luz_direccional->desactivar();
-      luz_posicional->activar();
-    }
-    else{
-      luz_posicional->desactivar();
-      // luz_direccional->activar();
-    }
-  }
-  else{
-    glDisable(GL_TEXTURE_2D);
-  }
+  // if(activar_luces){
+  //   if(luz_posicional_encendida){
+  //     luz_direccional->desactivar();
+  //     luz_posicional->activar();
+  //   }
+  //   else{
+  //     luz_posicional->desactivar();
+  //     luz_direccional->activar();
+  //   }
+  // }
+  // else{
+  //   glDisable(GL_TEXTURE_2D);
+  // }
 
   luz_posicional->activar();
+
   switch(figura_a_dibujar){
+
+    case 'u':
+      modo_camara = false;
     case '1':
       ply->escalar(); //para visualizarlo a una escala razonable
       ply->dibujar(forma_dibujado);
@@ -306,89 +310,127 @@ void Escena::draw_objects(unsigned char figura_a_dibujar) {
   luz_posicional->desactivar();
 }
 
-
 void Escena::dibujar(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
+  this->actualizarCamara();
+  camaras[camaraActiva].setObservador();
 	draw_axis();
 	draw_objects(figura_dibujada);
 }
 
 
-int Escena::teclaPulsada(unsigned char tecla,int x,int y) {
+int Escena::teclaPulsada(unsigned char tecla,int x,int y){
 
-  std::cout << "Tecla " << tecla << std::endl;
-	if (toupper(tecla)=='Q') return 1;
-
-  //con estas teclas cambiamos la forma de dibujar las figuras
-  else if(tolower(tecla)=='p' || tolower(tecla)=='l' || tolower(tecla)=='s' || tolower(tecla)=='a'){
-    forma_dibujado = tolower(tecla);
+  if(modo_camara){
+    switch(toupper(tecla)){
+      case 'U':
+        modo_camara = false;
+        break;
+      case 'W':
+        avanzar = true;
+        break;
+      case 'S':
+        retroceder = true;
+        break;
+      case 'A':
+        girar_i = true;
+        break;
+      case 'D':
+        girar_d = true;
+        break;
+      case 'R':
+        resetear = true;
+        break;
+      case 'Q':
+        return 1;
+    }
     return 0;
   }
+  else{
+    std::cout << "Tecla " << tecla << std::endl;
+  	if (toupper(tecla)=='Q') return 1;
 
-  else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
-        || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
-        || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.' || tecla=='/' || tecla=='*'){
-    // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
-    // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
-    // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
-    // v/V -> modificar grado de libertad: rotación de las piernas sobre la ingle (eje X)
-    // b/B -> modificar grado de libertad: traslación de la aureola (eje Z)
-    // n/N -> animación: efecto de caminar (mezcla de z/Z y v/V)
-    draw_objects(tecla);
-    return 0;
+    //con estas teclas cambiamos la forma de dibujar las figuras
+    else if(tolower(tecla)=='p' || tolower(tecla)=='l' || tolower(tecla)=='s' || tolower(tecla)=='a'){
+      forma_dibujado = tolower(tecla);
+      return 0;
+    }
+
+    else if(tecla=='z' || tecla=='Z' || tecla=='x' || tecla=='X' || tecla=='c' || tecla=='C'
+          || tecla=='v' || tecla=='V' || tecla=='b' || tecla=='B' || tecla=='n' || tecla=='N'
+          || tecla=='7' || tecla=='8' || tecla=='9' || tecla=='.' || tecla=='/' || tecla=='*'){
+      // z/Z -> modificar grado de libertad: rotación de los brazos con respecto a los hombros
+      // x/X -> modificar grado de libertad: rotación de la cabeza sobre el cuello (eje Y)
+      // c/C -> modificar grado de libertad: traslación de los ojos (eje Z)
+      // v/V -> modificar grado de libertad: rotación de las piernas sobre la ingle (eje X)
+      // b/B -> modificar grado de libertad: traslación de la aureola (eje Z)
+      // n/N -> animación: efecto de caminar (mezcla de z/Z y v/V)
+      draw_objects(tecla);
+      return 0;
+    }
+
+    else if(tecla=='u'){
+      modo_camara = true;
+      return 0;
+    }
+
+    else if(tecla=='6'){
+      if(luz_posicional_encendida)
+        luz_posicional_encendida = false;
+      else
+        luz_posicional_encendida = true;
+      return 0;
+    }
+
+    else if(tecla=='+'){
+      luz_posicional->moverLuzEjeX(100);
+      draw_objects(figura_dibujada);
+      return 0;
+    }
+
+    else if(tecla=='-'){
+      luz_posicional->moverLuzEjeX(-100);
+      draw_objects(figura_dibujada);
+      return 0;
+    }
+
+    else if(tecla=='o'){
+      // luz_direccional->moverLuzEjeX(5);
+      draw_objects(figura_dibujada);
+    }
+
+    else if(tecla=='i'){
+      draw_objects(figura_dibujada);
+    }
+
+    else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4' || tecla=='5'){
+      figura_dibujada = tecla;
+      draw_objects(figura_dibujada);
+      return 0;
+    }
+
+    //si pulsamos cualquier otra, no cambia nada
+    else return 0;
   }
-
-  else if(tecla=='6'){
-    if(luz_posicional_encendida)
-      luz_posicional_encendida = false;
-    else
-      luz_posicional_encendida = true;
-    return 0;
-  }
-
-  else if(tecla=='+'){
-    luz_posicional->moverLuzEjeX(150);
-    draw_objects(figura_dibujada);
-    return 0;
-  }
-
-  else if(tecla=='-'){
-    luz_posicional->moverLuzEjeX(-150);
-    draw_objects(figura_dibujada);
-    return 0;
-  }
-
-  else if(tecla=='o'){
-    // luz_direccional->moverLuzEjeX(5);
-    draw_objects(figura_dibujada);
-  }
-
-  else if(tecla=='i'){
-    draw_objects(figura_dibujada);
-  }
-
-  else if(tecla=='1' || tecla=='2' || tecla=='3' || tecla=='4' || tecla=='5'){
-    figura_dibujada = tecla;
-    draw_objects(figura_dibujada);
-    return 0;
-  }
-
-  //si pulsamos cualquier otra, no cambia nada
-  else return 0;
 }
 
 void Escena::teclaEspecial(int Tecla1,int x,int y) {
-switch (Tecla1){
-	case GLUT_KEY_LEFT:Observer_angle_y--;break;
-	case GLUT_KEY_RIGHT:Observer_angle_y++;break;
-	case GLUT_KEY_UP:Observer_angle_x--;break;
-	case GLUT_KEY_DOWN:Observer_angle_x++;break;
-	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
-	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
-	}
+  switch (Tecla1){
+  	case GLUT_KEY_LEFT:Observer_angle_y--;break;
+  	case GLUT_KEY_RIGHT:Observer_angle_y++;break;
+  	case GLUT_KEY_UP:Observer_angle_x--;break;
+  	case GLUT_KEY_DOWN:Observer_angle_x++;break;
+  	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
+  	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
 
-	std::cout << Observer_distance << std::endl;
+    case GLUT_KEY_F1:camaraActiva = 0;break;
+    case GLUT_KEY_F2:camaraActiva = 1;break;
+    case GLUT_KEY_F3:camaraActiva = 2;break;
+    case GLUT_KEY_F4:camaraActiva = 3;break;
+
+  	std::cout << Observer_distance << std::endl;
+  }
 }
 
 
@@ -429,6 +471,18 @@ void Escena::change_observer(){
 
 void Escena::draw_axis(){
   ejes.draw();
+}
+
+void Escena::imprimirMenu(){
+  cout << "\nOPCIONES DEL PROGRAMA EN MODO NORMAL: " << endl;
+  cout << " --> W <-- Avanzar hacia adelante." << endl;
+  cout << " --> S <-- Retroceder hacia atrás." << endl;
+  cout << " --> A <-- Avanzar hacia la izquierda." << endl;
+  cout << " --> D <-- Avanzar hacia la derecha." << endl;
+}
+
+void Escena::imprimirMenuCamara(){
+
 }
 
 //**************************************************************************
@@ -526,5 +580,43 @@ void Escena::animarRobot(){
       p_izda_delante = true;
       p_izda_atras = false;
     }
+  }
+}
+
+Camara Escena::getCamaraActiva(){
+  return this->camaras[this->camaraActiva];
+}
+
+void Escena::actualizarCamara(){
+  //activar una vista u otra
+  if(camaraActiva == 0)
+    this->camaras[0].setVistaAlzado();
+  else if(camaraActiva == 1)
+    this->camaras[1].setVistaPerfilDerecho();
+  else if(camaraActiva == 2)
+    this->camaras[2].setVistaPerfilIzquierdo();
+  else if(camaraActiva == 3)
+    this->camaras[3].setVistaPlanta();
+
+  //
+  if(avanzar){
+    this->camaras[camaraActiva].avanzar(camaraActiva, velocidad_camara);
+    avanzar = false;
+  }
+  else if(girar_d){
+    this->camaras[camaraActiva].girar(camaraActiva, velocidad_camara);
+    girar_d = false;
+  }
+  else if(girar_i){
+    this->camaras[camaraActiva].girar(camaraActiva, -velocidad_camara);
+    girar_i = false;
+  }
+  else if(retroceder){
+    this->camaras[camaraActiva].avanzar(camaraActiva, -velocidad_camara);
+    retroceder = false;
+  }
+  else if(resetear){
+    this->camaras[camaraActiva].resetear(camaraActiva);
+    resetear = false;
   }
 }

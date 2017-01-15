@@ -18,7 +18,7 @@ void LuzPosicional::desactivar(){
   glDisable(GL_LIGHT0);
 }
 
-void LuzPosicional::moverLuzEjeX(int x){
+void LuzPosicional::moverLuzEjeX(GLfloat x){
   posicion[0]+=x;
   posicion[1]=3000;
   posicion[2]=5000;

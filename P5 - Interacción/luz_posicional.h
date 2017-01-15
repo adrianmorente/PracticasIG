@@ -14,7 +14,7 @@ class LuzPosicional : public Luz{
     LuzPosicional(float posicion[3]);
     void activar();
     void desactivar();
-    void moverLuzEjeX(int x);
+    void moverLuzEjeX(GLfloat x);
 
 };
 
