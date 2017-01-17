@@ -60,3 +60,15 @@ void LuzDireccional::mover(float posicion){
 	glLightfv(GL_LIGHT2, GL_POSITION, posf2);
 	glLightfv(GL_LIGHT3, GL_POSITION, posf3);
 }
+
+void LuzDireccional::setLuzRoja(int discoteca){
+
+}
+
+void LuzDireccional::setLuzVerde(int discoteca){
+
+}
+
+void LuzDireccional::setLuzAzul(int discoteca){
+
+}

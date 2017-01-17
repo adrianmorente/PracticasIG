@@ -19,6 +19,9 @@ class LuzDireccional : public Luz{
     void activar();
     void desactivar();
     void mover(float posicion);
+    void setLuzRoja(int discoteca);
+    void setLuzVerde(int discoteca);
+    void setLuzAzul(int discoteca);
 };
 
 #endif

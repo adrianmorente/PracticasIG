@@ -15,12 +15,13 @@
 #include "escena.h"
 
 Escena *escena;
-Camara camaraActiva;
-int pos_x, pos_y;
-int estado;
 
+//variables añadidas para control de cámaras y movimiento del ratón
+GLfloat pixels[3]; //para controlar la selección de colores
+int ant_x=0, ant_y=0;
+bool clickDerecho=false, seleccionado=false;
 
-void draw_scene(void)  {
+void draw_scene(void){
 	if (escena!=NULL)	escena->dibujar();
 	glutSwapBuffers();
 }
@@ -50,7 +51,6 @@ void change_window_size(int newWidth,int newHeight)  {
 //***************************************************************************
 
 void normal_keys(unsigned char Tecla1,int x,int y)  {
-
 	int salir=0;
 	if (escena!=NULL)	salir=escena->teclaPulsada(Tecla1,x,y);
 	if (salir) {
@@ -76,60 +76,61 @@ void special_keys(int Tecla1,int x,int y) {
 	glutPostRedisplay();
 }
 
-
 void idle(){
-	escena->animarRobot();
+	escena->animar();
 	glutPostRedisplay();
-}
-
-int pick(int x, int y){
-	// // 1. Declarar buffer de selección
-	// glSelectBuffer(...);
-	// // 2. Obtener los parámetros del viewport
-	// glGetIntegerv(GL_VIEWPORT, viewport);
-	// // 3. Pasar OpenGL a modo selección
-	// glRenderMode(GL_SELECT);
-	// // 4. Fijar la transformación de proyección para la seleccion
-	// glMatrixMode(GL_PROJECTION);
-	// glLoadIdentity();
-	// gluPickMatrix(x,(viewport[3] - y),5.0, 5.0, viewport);
-	// MatrizProyeccion(); // SIN REALIZAR LoadIdentity !
-	// // 5. Dibujar la escena con Nombres
-	// dibujarConNombres();
-	// // 6. Pasar OpenGL a modo render
-	// hits = glRenderMode (GL_RENDER);
-	// // 7. Restablecer la transformación de proyección (sin gluPickMatrix)
-	// // 8. Analizar el contenido del buffer de selección
-	// // 9. Devolver el resultado
 }
 
 void clickRaton(int boton, int estado, int x, int y){
-	if(boton==GLUT_RIGHT_BUTTON){
-
-		if(estado==GLUT_DOWN){
-			cout << "Se pulsa el botón derecho, por lo que se entra en el estado -moviendo cámara-";
-			pos_x = x;
-			pos_y = y;
-		}
-		else{
-			cout << "Se levanta el botón derecho, por lo que se sale del estado -moviendo cámara-";
-		}
-	}
-	else if(boton==GLUT_LEFT_BUTTON){
-		pick(x,y);
-	}
+	// if(boton==GLUT_RIGHT_BUTTON){
+	// 	if(estado==GLUT_DOWN){
+	// 		cout << "Se pulsa el botón derecho, por lo que se entra en el estado -moviendo cámara-" << endl;
+	// 		clickDerecho = true;
+	// 		ant_x = x;
+	// 		ant_y = y;
+	// 	}
+	// 	else{
+	// 		cout << "Se levanta el botón derecho, por lo que se sale del estado -moviendo cámara-" << endl;
+	// 		clickDerecho = false;
+	// 	}
+	// }
+	//
+	// if(boton==GLUT_LEFT_BUTTON){
+	// 	if(estado==GLUT_DOWN){
+	// 		seleccionado = true;
+	// 		glDisable(GL_LIGHTING);
+	// 	}
+	// 	else if(estado==GLUT_UP){
+	// 		escena->setSeleccionado(seleccionado);
+	// 		glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,pixels);
+	// 		if(pixels[0]==0 && pixels[1]==1 && pixels[2]==2){
+	// 			cout << "primero" << endl;
+	// 			escena->setPixels(pixels[0],pixels[1],pixels[2]);
+	// 		}
+	// 		if(pixels[0]==1 && pixels[1]==2 && pixels[2]==0){
+	// 			cout << "segundo" << endl;
+	// 			escena->setPixels(pixels[0],pixels[1],pixels[2]);
+	// 		}
+	// 		cout << "Colores --> R:" << pixels[0] << " G:" << pixels[1] << " B:" << pixels[2] << endl;
+	// 		glEnable(GL_LIGHTING);
+	// 	}
+	// }
+	// glutPostRedisplay();
 }
 
-int xant, yant;
 void ratonMovido(int x, int y){
-	if(estado == GLUT_DOWN){
-		// escena->camaras[escena->camaraActiva]->girar(x-xant, y-yant);
-		xant = x;
-		yant = y;
+	int aux_x=0, aux_y=0;
+	if(clickDerecho){
+		aux_x = x-ant_x;
+		aux_y = y-ant_y;
+
+		if(escena->getSeleccionado())
+			escena->moverCamara(x,y);
+		else
+			escena->camaras[escena->getCamaraActiva()].moverConRaton(aux_x, aux_y);
 	}
 	glutPostRedisplay();
 }
-
 
 
 //***************************************************************************
@@ -171,11 +172,12 @@ glutSpecialFunc(special_keys);
 
 // funcion de inicialización
 escena->inicializar(UI_window_width,UI_window_height);
-// inicio del bucle de eventos
-glutIdleFunc( idle );
-// glutMouseFunc( clickRaton );
-// glutMotionFunc( ratonMovido );
 
+glutIdleFunc( idle );
+glutMouseFunc( clickRaton );
+glutMotionFunc( ratonMovido );
+
+// inicio del bucle de eventos
 glutMainLoop();
 return 0;
 }

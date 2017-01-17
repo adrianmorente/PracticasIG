@@ -128,9 +128,13 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   camaras[1].setAt(0,0,0);
   camaras[1].setUp(0,1,0);
 
-  camaras[2].setEye(0,10,0);
+  camaras[2].setEye(-10,0,0);
   camaras[2].setAt(0,0,0);
-  camaras[2].setUp(0,0,-1);
+  camaras[2].setUp(0,1,0);
+
+  camaras[3].setEye(0,10,0);
+  camaras[3].setAt(0,0,0);
+  camaras[3].setUp(0,0,-1);
 
   avanzar = retroceder = girar_d = girar_i = false;
 }
@@ -141,26 +145,30 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
 //***************************************************************************
 void Escena::draw_objects(unsigned char figura_a_dibujar){
 
-  // if(activar_luces){
-  //   if(luz_posicional_encendida){
-  //     luz_direccional->desactivar();
-  //     luz_posicional->activar();
-  //   }
-  //   else{
-  //     luz_posicional->desactivar();
-  //     luz_direccional->activar();
-  //   }
-  // }
-  // else{
-  //   glDisable(GL_TEXTURE_2D);
-  // }
-
   luz_posicional->activar();
 
-  switch(figura_a_dibujar){
+  // if(activar_luces){
+  //   glEnable(GL_TEXTURE_2D);
+  //   if(luz_posicional_encendida){
+  //     luz_posicional->activar();
+  //     luz_posicional->moverLuzEjeX(posicion_x);
+  //   }
+  //   else{
+  //     direccional_roja->setLuzRoja(discoteca);
+  //     direccional_verde->setLuzVerde(discoteca);
+  //     direccional_azul->setLuzAzul(discoteca);
+  //   }
+  // }
+  // else
+  //   glDisable(GL_TEXTURE_2D);
 
+  switch(figura_a_dibujar){
     case 'u':
       modo_camara = false;
+      break;
+    case 'U':
+      modo_camara = false;
+      break;
     case '1':
       ply->escalar(); //para visualizarlo a una escala razonable
       ply->dibujar(forma_dibujado);
@@ -314,15 +322,15 @@ void Escena::dibujar(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
   this->actualizarCamara();
-  camaras[camaraActiva].setObservador();
-	draw_axis();
-	draw_objects(figura_dibujada);
+  draw_axis();
+  draw_objects(figura_dibujada);
 }
 
 
 int Escena::teclaPulsada(unsigned char tecla,int x,int y){
 
   if(modo_camara){
+    imprimirMenuCamara();
     switch(toupper(tecla)){
       case 'U':
         modo_camara = false;
@@ -344,10 +352,12 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y){
         break;
       case 'Q':
         return 1;
+        break;
     }
     return 0;
   }
   else{
+    imprimirMenu();
     std::cout << "Tecla " << tecla << std::endl;
   	if (toupper(tecla)=='Q') return 1;
 
@@ -424,10 +434,22 @@ void Escena::teclaEspecial(int Tecla1,int x,int y) {
   	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
   	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
 
-    case GLUT_KEY_F1:camaraActiva = 0;break;
-    case GLUT_KEY_F2:camaraActiva = 1;break;
-    case GLUT_KEY_F3:camaraActiva = 2;break;
-    case GLUT_KEY_F4:camaraActiva = 3;break;
+    case GLUT_KEY_F1:
+      camaraActiva = 0;
+      cout << "Activada cámara nº 0 -> (alzado)" << endl;
+      break;
+    case GLUT_KEY_F2:
+      camaraActiva = 1;
+      cout << "Activada cámara nº 1 -> (perfil derecho)" << endl;
+      break;
+    case GLUT_KEY_F3:
+      camaraActiva = 2;
+      cout << "Activada cámara nº 2 -> (perfil izquierdo)" << endl;
+      break;
+    case GLUT_KEY_F4:
+      camaraActiva = 3;
+      cout << "Activada cámara nº 3 -> (planta)" << endl;
+      break;
 
   	std::cout << Observer_distance << std::endl;
   }
@@ -474,21 +496,21 @@ void Escena::draw_axis(){
 }
 
 void Escena::imprimirMenu(){
-  cout << "\nOPCIONES DEL PROGRAMA EN MODO NORMAL: " << endl;
+
+}
+
+void Escena::imprimirMenuCamara(){
+  cout << "\nOPCIONES DEL PROGRAMA EN MODO CAMARA: " << endl;
   cout << " --> W <-- Avanzar hacia adelante." << endl;
   cout << " --> S <-- Retroceder hacia atrás." << endl;
   cout << " --> A <-- Avanzar hacia la izquierda." << endl;
   cout << " --> D <-- Avanzar hacia la derecha." << endl;
 }
 
-void Escena::imprimirMenuCamara(){
-
-}
-
 //**************************************************************************
 // Funcion que anima al robot de forma automática
 //***************************************************************************
-void Escena::animarRobot(){
+void Escena::animar(){
   if(hacer_animacion){
     if(cabeza_izquierda && grados_cabeza < 90)
       grados_cabeza += (2+velocidad_animacion);
@@ -581,10 +603,27 @@ void Escena::animarRobot(){
       p_izda_atras = false;
     }
   }
+
+  if(activar_luces){
+    if(posicion_x < 2000 && animar_luces)
+      posicion_x += 20;
+    else{
+      animar_luces = false;
+      posicion_x -= 20;
+      if(posicion_x < -2000)
+        animar_luces = true;
+    }
+  }
 }
 
-Camara Escena::getCamaraActiva(){
-  return this->camaras[this->camaraActiva];
+int Escena::getCamaraActiva(){
+  return this->camaraActiva;
+}
+
+void Escena::moverCamara(int x, int y){
+  Observer_angle_x = y;
+  Observer_angle_y = x;
+  change_observer();
 }
 
 void Escena::actualizarCamara(){
@@ -619,4 +658,39 @@ void Escena::actualizarCamara(){
     this->camaras[camaraActiva].resetear(camaraActiva);
     resetear = false;
   }
+}
+
+//control de selección de Colores
+void Escena::dibujarSeleccion(){
+  glDisable(GL_DITHER);
+  glPushMatrix();
+    glScalef(35.0f, 35.0f, 35.0f);
+    glColor3f(0,255,0);
+    peon1->dibujar(forma_dibujado);
+  glPopMatrix();
+  glPushMatrix();
+    glScalef(35.0f, 35.0f, 35.0f);
+    glColor3f(255,0,0);
+    peon2->dibujar(forma_dibujado);
+  glPopMatrix();
+  glPushMatrix();
+    glScalef(35.0f, 35.0f, 35.0f);
+    glColor3f(0,0,255);
+    peon3->dibujar(forma_dibujado);
+  glPopMatrix();
+  glEnable(GL_DITHER);
+}
+
+bool Escena::getSeleccionado(){
+  return modo_seleccion;
+}
+
+void Escena::setSeleccionado(bool condicion){
+  this->modo_seleccion = condicion;
+}
+
+void Escena::setPixels(float cero, float uno, float dos){
+  this->pixels[0] = cero;
+  this->pixels[1] = uno;
+  this->pixels[2] = dos;
 }
