@@ -82,40 +82,40 @@ void idle(){
 }
 
 void clickRaton(int boton, int estado, int x, int y){
-	// if(boton==GLUT_RIGHT_BUTTON){
-	// 	if(estado==GLUT_DOWN){
-	// 		cout << "Se pulsa el botón derecho, por lo que se entra en el estado -moviendo cámara-" << endl;
-	// 		clickDerecho = true;
-	// 		ant_x = x;
-	// 		ant_y = y;
-	// 	}
-	// 	else{
-	// 		cout << "Se levanta el botón derecho, por lo que se sale del estado -moviendo cámara-" << endl;
-	// 		clickDerecho = false;
-	// 	}
-	// }
-	//
-	// if(boton==GLUT_LEFT_BUTTON){
-	// 	if(estado==GLUT_DOWN){
-	// 		seleccionado = true;
-	// 		glDisable(GL_LIGHTING);
-	// 	}
-	// 	else if(estado==GLUT_UP){
-	// 		escena->setSeleccionado(seleccionado);
-	// 		glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,pixels);
-	// 		if(pixels[0]==0 && pixels[1]==1 && pixels[2]==2){
-	// 			cout << "primero" << endl;
-	// 			escena->setPixels(pixels[0],pixels[1],pixels[2]);
-	// 		}
-	// 		if(pixels[0]==1 && pixels[1]==2 && pixels[2]==0){
-	// 			cout << "segundo" << endl;
-	// 			escena->setPixels(pixels[0],pixels[1],pixels[2]);
-	// 		}
-	// 		cout << "Colores --> R:" << pixels[0] << " G:" << pixels[1] << " B:" << pixels[2] << endl;
-	// 		glEnable(GL_LIGHTING);
-	// 	}
-	// }
-	// glutPostRedisplay();
+	if(boton==GLUT_RIGHT_BUTTON){
+		if(estado==GLUT_DOWN){
+			cout << "Se pulsa el botón derecho, por lo que se entra en el estado -moviendo cámara-" << endl;
+			clickDerecho = true;
+			ant_x = x;
+			ant_y = y;
+		}
+		else{
+			cout << "Se levanta el botón derecho, por lo que se sale del estado -moviendo cámara-" << endl;
+			clickDerecho = false;
+		}
+	}
+
+	if(boton==GLUT_LEFT_BUTTON){
+		if(estado==GLUT_DOWN){
+			seleccionado = true;
+			glDisable(GL_LIGHTING);
+		}
+		else if(estado==GLUT_UP){
+			escena->setSeleccionado(seleccionado);
+			glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,pixels);
+			if(pixels[0]==0 && pixels[1]==1 && pixels[2]==2){
+				cout << "primero" << endl;
+				escena->setPixels(pixels[0],pixels[1],pixels[2]);
+			}
+			if(pixels[0]==1 && pixels[1]==2 && pixels[2]==0){
+				cout << "segundo" << endl;
+				escena->setPixels(pixels[0],pixels[1],pixels[2]);
+			}
+			cout << "Colores --> R:" << pixels[0] << " G:" << pixels[1] << " B:" << pixels[2] << endl;
+			glEnable(GL_LIGHTING);
+		}
+	}
+	glutPostRedisplay();
 }
 
 void ratonMovido(int x, int y){

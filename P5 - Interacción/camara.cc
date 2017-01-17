@@ -31,13 +31,6 @@ void Camara::setVistaAlzado(){
   this->setObservador();
 }
 
-void Camara::setVistaPlanta(){
-  this->setEye(giroPlanta,avancePlanta,0);
-  this->setAt(0,0,0);
-  this->setUp(0,0,-1);
-  this->setObservador();
-}
-
 void Camara::setVistaPerfilDerecho(){
   this->setEye(avanceDcha,0,giroDcha);
   this->setAt(0,0,0);
@@ -52,19 +45,30 @@ void Camara::setVistaPerfilIzquierdo(){
   this->setObservador();
 }
 
+void Camara::setVistaPlanta(){
+  this->setEye(giroPlanta,avancePlanta,0);
+  this->setAt(0,0,0);
+  this->setUp(0,0,-1);
+  this->setObservador();
+}
+
 void Camara::resetear(int camara){
   switch(camara){
     case 0:
-      setVistaAlzado();
+      this->giroAlzado = 0;
+      this->avanceAlzado = 10;
       break;
     case 1:
-      setVistaPlanta();
+      this->giroDcha = 0;
+      this->avanceDcha = 10;
       break;
     case 2:
-      setVistaPerfilDerecho();
+      this->giroIzda = 0;
+      this->avanceIzda = -10;
       break;
     case 3:
-      setVistaPerfilIzquierdo();
+      this->giroPlanta = 0;
+      this->avancePlanta = 10;
       break;
   }
 }
@@ -75,13 +79,13 @@ void Camara::avanzar(int camara, int pos){
       avanceAlzado -= pos;
       break;
     case 1:
-      avanceDcha += pos;
+      avanceDcha -= pos;
       break;
     case 2:
-      avanceIzda -= pos;
+      avanceIzda += pos;
       break;
     case 3:
-      avancePlanta += pos;
+      avancePlanta -= pos;
       break;
   }
 }
@@ -102,6 +106,10 @@ void Camara::girar(int camara, int pos){
   }
 }
 
+void Camara::girar(int camara, int x, int y){
+
+}
+
 void Camara::setObservador(){
   gluLookAt(eye.x,eye.y,eye.z, at.x,at.y,at.z, up.x,up.y,up.z);
   imprimirPosicion();
@@ -114,32 +122,32 @@ void Camara::moverFPS(float x, float z){
 }
 
 void Camara::moverConRaton(float x, float y){
-  float cons = M_PI / 180;
+  // float cons = M_PI / 180;
+  //
+  // cout << " at.x: " << at.x << " at.y: " << at.y << endl;
+  // cout << "x: " << x << " y: " << y << endl;
+  //
+  // GLfloat auxx, auxy, auxz;
+  // auxx = atan2(x, at.x);
+  // auxy = atan2(y, at.y);
 
-  cout << " at.x: " << at.x << " at.y: " << at.y << endl;
-  cout << "x: " << x << " y: " << y << endl;
-
-  GLfloat auxx, auxy, auxz;
-  auxx = atan2(x, at.x);
-  auxy = atan2(y, at.y);
-
-  if(at.x < 250)
-    at.x -= auxx;
-  else if(at.x >= 250)
-    at.x = 249;
-  if(at.x > -250)
-    at.x -= auxx;
-  else if(at.x <= -250)
-    at.x = -249;
-
-  if(at.y < 250)
-    at.y -= auxy;
-  else if(at.y >= 250)
-    at.y = 249;
-  if(at.y > -250)
-    at.y -= auxy;
-  else if(at.y <= -250)
-    at.y = -249;
+  // if(at.x < 250)
+  //   at.x -= auxx;
+  // else if(at.x >= 250)
+  //   at.x = 249;
+  // if(at.x > -250)
+  //   at.x -= auxx;
+  // else if(at.x <= -250)
+  //   at.x = -249;
+  //
+  // if(at.y < 250)
+  //   at.y -= auxy;
+  // else if(at.y >= 250)
+  //   at.y = 249;
+  // if(at.y > -250)
+  //   at.y -= auxy;
+  // else if(at.y <= -250)
+  //   at.y = -249;
 }
 
 void Camara::imprimirPosicion(){

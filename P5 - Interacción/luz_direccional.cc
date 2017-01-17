@@ -62,13 +62,43 @@ void LuzDireccional::mover(float posicion){
 }
 
 void LuzDireccional::setLuzRoja(int discoteca){
+  glEnable(GL_LIGHTING);
+  GLfloat ambiental[] = { 0.5, 0.0, 0.0, 1.0 };
+  GLfloat difusa[] = { 1.0, 0.0, 0.0, 0.0 };
+  GLfloat especular[] = { 1.0, 1.0, 1.0, 1.0 };
+  const GLfloat dirf[4] = { -5000+(float)(discoteca*10), 5000, 0, 0.0 } ; // (x,y,z,w)
 
+  glLightfv( GL_LIGHT1, GL_POSITION, dirf );
+  glLightfv(GL_LIGHT1, GL_AMBIENT, ambiental);
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, difusa);
+  glLightfv(GL_LIGHT1, GL_SPECULAR, especular);
+  glEnable(GL_LIGHT1);
 }
 
 void LuzDireccional::setLuzVerde(int discoteca){
+  glEnable(GL_LIGHTING);
+  GLfloat ambiental[] = { 0.0, 0.5, 0.0, 1.0 };
+  GLfloat difusa[] = { 0.0, 1.0, 0.0, 0.0 };
+  GLfloat especular[] = { 1.0, 1.0, 1.0, 1.0 };
+  const GLfloat dirf[4] = { (float)(discoteca*10)+5000, 15000, -1000, 0.0 } ; // (x,y,z,w)
 
+  glLightfv( GL_LIGHT2, GL_POSITION, dirf );
+  glLightfv(GL_LIGHT2, GL_AMBIENT, ambiental);
+  glLightfv(GL_LIGHT2, GL_DIFFUSE, difusa);
+  glLightfv(GL_LIGHT2, GL_SPECULAR, especular);
+  glEnable(GL_LIGHT2);
 }
 
 void LuzDireccional::setLuzAzul(int discoteca){
+  glEnable(GL_LIGHTING);
+  GLfloat ambiental[] = { 0.0, 0.0, 0.5, 1.0 };
+  GLfloat difusa[] = { 0.0, 0.0, 1.0, 0.0 };
+  GLfloat especular[] = { 1.0, 1.0, 1.0, 1.0 };
+  const GLfloat dirf[4] = { (float)discoteca+0, 5000, 0, 0.0 } ; // (x,y,z,w)
 
+  glLightfv( GL_LIGHT3, GL_POSITION, dirf );
+  glLightfv(GL_LIGHT3, GL_AMBIENT, ambiental);
+  glLightfv(GL_LIGHT3, GL_DIFFUSE, difusa);
+  glLightfv(GL_LIGHT3, GL_SPECULAR, especular);
+  glEnable(GL_LIGHT3);
 }

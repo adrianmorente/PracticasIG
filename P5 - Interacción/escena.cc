@@ -123,19 +123,15 @@ void Escena::inicializar(int UI_window_width,int UI_window_height) {
   camaras[0].setEye(0,0,10);
   camaras[0].setAt(0,0,0);
   camaras[0].setUp(0,1,0);
-
   camaras[1].setEye(10,0,0);
   camaras[1].setAt(0,0,0);
   camaras[1].setUp(0,1,0);
-
   camaras[2].setEye(-10,0,0);
   camaras[2].setAt(0,0,0);
   camaras[2].setUp(0,1,0);
-
   camaras[3].setEye(0,10,0);
   camaras[3].setAt(0,0,0);
   camaras[3].setUp(0,0,-1);
-
   avanzar = retroceder = girar_d = girar_i = false;
 }
 
@@ -496,11 +492,21 @@ void Escena::draw_axis(){
 }
 
 void Escena::imprimirMenu(){
+  cout << "\nOPCIONES DEL PROGRAMA EN MODO NORMAL: " << endl;
+  cout << " --> Q <-- Salir del programa." << endl;
+  cout << " --> U <-- Entrar al modo cámara." << endl;
+  cout << " --> P <-- Dibujar en modo puntos." << endl;
+  cout << " --> A <-- Dibujar normales como líneas." << endl;
+  cout << " --> S <-- Dibujar en modo sólido." << endl;
+  cout << " --> L <-- Dibujar en modo líneas." << endl;
+  cout << " --> Z,X,C,V,B,N <-- Jugar con diversas animaciones del robot." << endl;
 
 }
 
 void Escena::imprimirMenuCamara(){
   cout << "\nOPCIONES DEL PROGRAMA EN MODO CAMARA: " << endl;
+  cout << " --> Q <-- Salir del programa." << endl;
+  cout << " --> U <-- Salir del modo cámara." << endl;
   cout << " --> W <-- Avanzar hacia adelante." << endl;
   cout << " --> S <-- Retroceder hacia atrás." << endl;
   cout << " --> A <-- Avanzar hacia la izquierda." << endl;
@@ -658,6 +664,7 @@ void Escena::actualizarCamara(){
     this->camaras[camaraActiva].resetear(camaraActiva);
     resetear = false;
   }
+  this->camaras[camaraActiva].imprimirPosicion();
 }
 
 //control de selección de Colores
