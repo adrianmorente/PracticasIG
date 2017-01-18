@@ -106,48 +106,9 @@ void Camara::girar(int camara, int pos){
   }
 }
 
-void Camara::girar(int camara, int x, int y){
-
-}
-
 void Camara::setObservador(){
   gluLookAt(eye.x,eye.y,eye.z, at.x,at.y,at.z, up.x,up.y,up.z);
   imprimirPosicion();
-}
-
-void Camara::moverFPS(float x, float z){
-  this->eye.x = x;
-  this->eye.z = z;
-  setObservador();
-}
-
-void Camara::moverConRaton(float x, float y){
-  // float cons = M_PI / 180;
-  //
-  // cout << " at.x: " << at.x << " at.y: " << at.y << endl;
-  // cout << "x: " << x << " y: " << y << endl;
-  //
-  // GLfloat auxx, auxy, auxz;
-  // auxx = atan2(x, at.x);
-  // auxy = atan2(y, at.y);
-
-  // if(at.x < 250)
-  //   at.x -= auxx;
-  // else if(at.x >= 250)
-  //   at.x = 249;
-  // if(at.x > -250)
-  //   at.x -= auxx;
-  // else if(at.x <= -250)
-  //   at.x = -249;
-  //
-  // if(at.y < 250)
-  //   at.y -= auxy;
-  // else if(at.y >= 250)
-  //   at.y = 249;
-  // if(at.y > -250)
-  //   at.y -= auxy;
-  // else if(at.y <= -250)
-  //   at.y = -249;
 }
 
 void Camara::imprimirPosicion(){

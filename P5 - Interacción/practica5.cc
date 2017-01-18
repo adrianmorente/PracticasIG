@@ -23,7 +23,8 @@ bool clickDerecho=false, seleccionado=false;
 
 void draw_scene(void){
 	if (escena!=NULL)	escena->dibujar();
-	glutSwapBuffers();
+	if(!seleccionado)
+		glutSwapBuffers();
 }
 
 
@@ -97,11 +98,14 @@ void clickRaton(int boton, int estado, int x, int y){
 
 	if(boton==GLUT_LEFT_BUTTON){
 		if(estado==GLUT_DOWN){
-			seleccionado = true;
+			if(seleccionado)
+				seleccionado = false;
+			else
+				seleccionado = true;
 			glDisable(GL_LIGHTING);
 		}
 		else if(estado==GLUT_UP){
-			escena->setSeleccionado(seleccionado);
+			escena->setSeleccionado(true);
 			glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,pixels);
 			if(pixels[0]==0 && pixels[1]==1 && pixels[2]==2){
 				cout << "primero" << endl;
@@ -109,6 +113,10 @@ void clickRaton(int boton, int estado, int x, int y){
 			}
 			if(pixels[0]==1 && pixels[1]==2 && pixels[2]==0){
 				cout << "segundo" << endl;
+				escena->setPixels(pixels[0],pixels[1],pixels[2]);
+			}
+			if(pixels[0]==2 && pixels[1]==0 && pixels[2]==1){
+				cout << "tercero" << endl;
 				escena->setPixels(pixels[0],pixels[1],pixels[2]);
 			}
 			cout << "Colores --> R:" << pixels[0] << " G:" << pixels[1] << " B:" << pixels[2] << endl;
@@ -125,9 +133,12 @@ void ratonMovido(int x, int y){
 		aux_y = y-ant_y;
 
 		if(escena->getSeleccionado())
-			escena->moverCamara(x,y);
+
+			escena->moverCamara(aux_x,aux_y);
 		else
-			escena->camaras[escena->getCamaraActiva()].moverConRaton(aux_x, aux_y);
+			// escena->camaras[escena->getCamaraActiva()].moverConRaton(aux_x, aux_y);
+		ant_x = x;
+		ant_y = y;
 	}
 	glutPostRedisplay();
 }

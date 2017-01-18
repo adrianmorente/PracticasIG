@@ -326,10 +326,22 @@ void Escena::dibujar(){
 int Escena::teclaPulsada(unsigned char tecla,int x,int y){
 
   if(modo_camara){
-    imprimirMenuCamara();
     switch(toupper(tecla)){
       case 'U':
         modo_camara = false;
+        imprimirMenu();
+        break;
+      case 'O':
+        if(modo_perspectiva){
+          modo_perspectiva = false;
+          change_projection();
+          cout << "--> Modo ortogonal activado." << endl;
+        }
+        else{
+          modo_perspectiva = true;
+          change_projection();
+          cout << "--> Modo perspectiva activado." << endl;
+        }
         break;
       case 'W':
         avanzar = true;
@@ -353,7 +365,6 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y){
     return 0;
   }
   else{
-    imprimirMenu();
     std::cout << "Tecla " << tecla << std::endl;
   	if (toupper(tecla)=='Q') return 1;
 
@@ -378,6 +389,7 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y){
 
     else if(tecla=='u'){
       modo_camara = true;
+      imprimirMenuCamara();
       return 0;
     }
 
@@ -399,11 +411,6 @@ int Escena::teclaPulsada(unsigned char tecla,int x,int y){
       luz_posicional->moverLuzEjeX(-100);
       draw_objects(figura_dibujada);
       return 0;
-    }
-
-    else if(tecla=='o'){
-      // luz_direccional->moverLuzEjeX(5);
-      draw_objects(figura_dibujada);
     }
 
     else if(tecla=='i'){
@@ -459,7 +466,10 @@ void Escena::teclaEspecial(int Tecla1,int x,int y) {
 void Escena::change_projection(){
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glFrustum(-Width,Width,-Height,Height,Front_plane,Back_plane);
+  if(modo_perspectiva)
+    glFrustum(-Width,Width,-Height,Height,Front_plane,Back_plane);
+  else  //modo_ortogonal
+    glOrtho(-150,150,-150,150,Front_plane,Back_plane);
 }
 
 void Escena::redimensionar(int newWidth,int newHeight){
@@ -627,8 +637,8 @@ int Escena::getCamaraActiva(){
 }
 
 void Escena::moverCamara(int x, int y){
-  Observer_angle_x = y;
-  Observer_angle_y = x;
+  Observer_angle_x += y;
+  Observer_angle_y += x;
   change_observer();
 }
 

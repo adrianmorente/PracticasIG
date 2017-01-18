@@ -36,6 +36,7 @@ private:
 	//cámara y selección
 	int camaraActiva = 0;
 	bool modo_camara = true;
+	bool modo_perspectiva = true;
 	bool avanzar, retroceder, girar_d, girar_i, resetear;
 	float velocidad_camara = 2;
 	GLfloat pixels[3];

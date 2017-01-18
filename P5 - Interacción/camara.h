@@ -38,10 +38,7 @@ class Camara{
 
     void avanzar(int camara, int pos);
     void girar(int camara, int pos);
-    void girar(int camara, int x, int y);
 
-    void moverFPS(float x, float z);
-    void moverConRaton(float x, float y);
     void setObservador();
     void imprimirPosicion();
 };
